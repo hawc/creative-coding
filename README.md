@@ -1,14 +1,18 @@
-# Turborepo Svelte starter
+# Creative Coding
 
-This is an official starter Turborepo.
+This project is a base setup for creative coding, utilizing different technologies for rendering in- and output.
 
-## Using this example
+It is based on Turborepo and Svelte - written in TypeScript.
 
-Run the following command:
+## Running this project
+
+For the dev server run the following command:
 
 ```sh
-npx create-turbo@latest -e with-svelte
+npm run dev
 ```
+
+For production deployments navigate to the app directory you want to deploy and follow the descriptions in the corresponding README.md file.
 
 ## What's inside?
 
@@ -16,12 +20,10 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [svelte-kit](https://kit.svelte.dev/) app
-- `web`: another [svelte-kit](https://kit.svelte.dev/) app
+- `web`: a [svelte-kit](https://kit.svelte.dev/) app, using websockets to control rendered p5 output (wip)
+- `docs`: a [svelte-kit](https://kit.svelte.dev/) demo app
 - `ui`: a stub Svelte component library shared by both `web` and `docs` applications
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-plugin-svelte` and `eslint-config-prettier`)
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ### Utilities
 

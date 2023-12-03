@@ -17,7 +17,6 @@
     "rollup": "^4.6.1",
     "turbo": "latest"
   },
-  "packageManager": "bun@1.0.15",
   "workspaces": [
     "apps/*",
     "packages/*"
