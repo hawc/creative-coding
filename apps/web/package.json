@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@repo/ui": "*",
+    "@types/webmidi": "^2.0.10",
     "nanoid": "^4.0.2",
     "p5-svelte": "^3.1.2",
     "ws": "8.13.0"

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { appendMessage } from '$lib';
+	import { initMIDIAccess } from '$lib/client/webMidiUtils';
 	import {
 		establishWebSocket,
 		webSocketEstablished,
@@ -7,6 +9,7 @@
 
 	import type p5 from 'p5';
 	import P5 from 'p5-svelte';
+	import { onMount } from 'svelte';
 
 	let messages = [''];
 	let width = 55;
@@ -22,9 +25,13 @@
 		};
 	};
 
-	const appendMessage = (message: string) => {
-		messages = [...messages, message];
-	};
+	onMount(async () => {
+		const handler = (command: number, key: number, velocity: number) => {
+			console.log(command, key, velocity);
+		};
+
+		await initMIDIAccess(handler);
+	});
 </script>
 
 <main>
@@ -34,7 +41,7 @@
 		Establish WebSocket connection
 	</button>
 
-	<button on:click={async () => appendMessage(await requestData())}>
+	<button on:click={async () => (messages = appendMessage(messages, await requestData()))}>
 		Request Data from GET endpoint
 	</button>
 </main>
