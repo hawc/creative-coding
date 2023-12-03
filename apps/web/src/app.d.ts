@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-declare module '@macfja/svelte-p5' { };
+declare module '@macfja/svelte-p5' {}
 
 declare module 'ws' {
   interface WebSocket {
@@ -19,4 +19,4 @@ declare module 'ws' {
   }
 }
 
-export { };
+export {};
