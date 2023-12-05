@@ -45,25 +45,27 @@
 
     await initMIDIAccess(handler);
   });
+
+  async function setMessage() {
+    messages = appendMessage(messages, await requestData());
+  }
 </script>
 
 <main>
   <h1>SvelteKit with WebSocket Integration</h1>
 
-  <Button disabled={webSocketEstablished} on:click={() => establishWebSocket()}>
+  <Button disabled={webSocketEstablished} on:message={() => establishWebSocket()}>
     Establish WebSocket connection
   </Button>
 
-  <Button on:click={async () => (messages = appendMessage(messages, await requestData()))}>
-    Request Data from GET endpoint
-  </Button>
+  <Button on:message={async () => setMessage()}>Request Data from GET endpoint</Button>
+
+  {#each messages as message}
+    <p>{message}</p>
+  {/each}
 </main>
 
 <div><P5Canvas {sketch} /></div>
-
-{#each messages as message}
-  <p>{message}</p>
-{/each}
 
 <style>
   main {
