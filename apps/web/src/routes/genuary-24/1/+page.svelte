@@ -17,7 +17,7 @@
 
   const sketch = (p5: p5) => {
     p5.setup = () => {
-      p5.createCanvas(400, 400);
+      p5.createCanvas(window.innerWidth, window.innerHeight);
     };
 
     p5.draw = () => {
@@ -58,7 +58,9 @@
   {height}
 </label>
 
-<P5 {sketch} />
+<div>
+  <P5 {sketch} />
+</div>
 
 {#each messages as message}
   <p>{message}</p>

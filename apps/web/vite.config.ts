@@ -22,11 +22,11 @@ export default defineConfig({
     include: ['src/**/*.{test,spec}.{js,ts}']
   },
   optimizeDeps: {
-    include: ['@repo/ui']
+    exclude: ['@partnerds-de/ui']
   },
   build: {
     commonjsOptions: {
-      include: [/@repo-ui/, /node_modules/]
+      include: [/@partnerds-de-ui/, /node_modules/]
     }
   },
   ssr: {

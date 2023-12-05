@@ -35,7 +35,7 @@
 </script>
 
 <main>
-  <h1>SvelteKit with WebSocket Integration</h1>
+  <h1 class="bg-green">SvelteKit with WebSocket Integration</h1>
 
   <button disabled={webSocketEstablished} on:click={() => establishWebSocket()}>
     Establish WebSocket connection

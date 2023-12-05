@@ -1,5 +1,5 @@
 {
-  "name": "@repo/ui",
+  "name": "@partnerds-de/ui",
   "version": "0.0.0",
   "type": "module",
   "module": "index.ts",
@@ -9,7 +9,7 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "svelte": "^4.2.7"
+    "@partnerds-de/eslint-config": "*",
+    "svelte": "^4.2.8"
   }
 }

@@ -7,14 +7,17 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
+    "@partnerds-de/eslint-config": "*",
+    "autoprefixer": "^10.4.16",
     "esbuild": "^0.19.8",
-    "eslint": "^8.44.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-svelte": "^2.32.2",
-    "prettier": "^2.8.8",
-    "prettier-plugin-svelte": "^2.10.1",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-svelte": "^2.35.1",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.0",
+    "prettier-plugin-svelte": "^3.1.2",
     "rollup": "^4.6.1",
+    "tailwindcss": "^3.3.6",
     "turbo": "latest"
   },
   "workspaces": [
