@@ -1,62 +1,34 @@
-function listInputsAndOutputs(midiAccess: WebMidi.MIDIAccess) {
-  for (const entry of midiAccess.inputs) {
-    const input = entry[1];
-    console.log(
-      "Input port [type:'" +
-        input.type +
-        "'] id:'" +
-        input.id +
-        "' manufacturer:'" +
-        input.manufacturer +
-        "' name:'" +
-        input.name +
-        "' version:'" +
-        input.version +
-        "'"
-    );
-  }
+type DeviceOffsetConfig = { [key: string]: number };
 
-  for (const entry of midiAccess.outputs) {
-    const output = entry[1];
-    console.log(
-      "Output port [type:'" +
-        output.type +
-        "'] id:'" +
-        output.id +
-        "' manufacturer:'" +
-        output.manufacturer +
-        "' name:'" +
-        output.name +
-        "' version:'" +
-        output.version +
-        "'"
-    );
-  }
+export type MidiHandler = (key: number, velocity: number) => void;
+
+const deviceOffset: DeviceOffsetConfig = {
+  '163286373': 32,
 }
 
 function onMIDIMessage(
   event: WebMidi.MIDIMessageEvent,
-  handler: (command: number, key: number, velocity: number) => void
+  offset: number,
+  handler: MidiHandler
 ) {
-  const command = event.data[0];
   const key = event.data[1];
-  const velocity = event.data.length > 2 ? event.data[2] : 0; // a velocity value might not be included with a noteOff command
+  const velocity = event.data.length > 2 ? event.data[2] : 0;
 
-  handler(command, key, velocity);
+  handler(key - offset, velocity);
 }
 
 export async function initMIDIAccess(
-  handler: (command: number, key: number, velocity: number) => void
+  handler: MidiHandler
 ) {
   try {
     const midiAccess = await navigator.requestMIDIAccess();
     console.log('MIDI ready!');
     midiAccess.inputs.forEach((entry) => {
+      const offset = entry.id in deviceOffset ? deviceOffset[entry.id] : 0;
       entry.onmidimessage = (event) => {
-        onMIDIMessage(event, handler);
+        onMIDIMessage(event, offset, handler);
       };
     });
-    listInputsAndOutputs(midiAccess);
   } catch (err) {
     console.log('Failed to get MIDI access - ' + err);
   }

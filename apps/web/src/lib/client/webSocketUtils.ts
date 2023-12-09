@@ -7,6 +7,7 @@ const logEvent = (...message: any[]) => {
 };
 
 export const establishWebSocket = () => {
+  console.log("webSocketEstablished: ", webSocketEstablished);
   if (webSocketEstablished) return;
   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
   ws = new WebSocket(`${protocol}//${window.location.host}/websocket`);
