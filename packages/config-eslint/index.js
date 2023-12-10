@@ -2,9 +2,12 @@ module.exports = {
   root: true,
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
     'plugin:svelte/recommended',
+    'plugin:@typescript-eslint/recommended',
     'prettier',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
     'turbo'
   ],
   parser: '@typescript-eslint/parser',
@@ -14,6 +17,7 @@ module.exports = {
     ecmaVersion: 2020,
     extraFileExtensions: ['.svelte']
   },
+  ignorePatterns: ['*.cjs'],
   env: {
     browser: true,
     es2017: true,
@@ -29,6 +33,24 @@ module.exports = {
     }
   ],
   rules: {
-    indent: ['error', 2, { "SwitchCase": 1 }]
+    indent: ['error', 2, { 'SwitchCase': 1 }],
+    'import/order': [
+      'warn',
+      {
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true
+        },
+        'newlines-between': 'always'
+      }
+    ],
+    'import/no-unresolved': 'off'
+  },
+  settings: {
+    'import/resolver': {
+      'node': {
+        'extensions': ['.ts', '.tsx'],
+      }
+    }
   }
 };

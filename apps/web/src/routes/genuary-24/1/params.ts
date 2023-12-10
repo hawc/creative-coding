@@ -1,5 +1,6 @@
-import { BASE_PARAMS } from '$lib/client/canvasUtils';
 import { writable } from 'svelte/store';
+
+import { BASE_PARAMS } from '$lib/client/canvasUtils';
 
 export const controls = writable({ key: 0, velocity: 1 });
 

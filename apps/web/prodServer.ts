@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as url from 'url';
+
 import { createWSSGlobalInstance, onHttpServerUpgrade } from './src/lib/server/webSocketUtils';
 
 const __filename = url.fileURLToPath(import.meta.url);

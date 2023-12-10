@@ -1,30 +1,29 @@
 <script lang="ts">
-  import { initMIDIAccess, type MidiHandler } from '$lib/client/webMidiUtils';
   import { onMount } from 'svelte';
-  import { controls } from '$lib/store.js';
+
+  import { roundDecimals } from '$lib/client/mathUtils';
+  import { initMIDIAccess, type MidiHandler } from '$lib/client/webMidiUtils';
   import { debug } from '$lib/store';
+  import { midiControls } from '$lib/store.js';
 
   let messages = '';
-  let allowLogging = false;
+  let allowLogging = $debug;
 
-  debug.subscribe((value) => {
-    allowLogging = value;
-  });
   onMount(async () => {
     const handler: MidiHandler = (key, velocity) => {
       if (allowLogging) {
         messages = `${key}.${velocity}`;
       }
 
-      // console.log({ key, velocity: velocity / 127 });
-
-      $controls = { key, velocity: Math.floor((velocity / 127) * 100) / 100 };
+      $midiControls = { key, velocity: roundDecimals(velocity / 127) };
     };
 
     await initMIDIAccess(handler);
   });
 </script>
 
-<p>Midi-Messages:<br />{messages}</p>
+{#if allowLogging}
+  <p>Midi-Messages:<br />{messages}</p>
+{/if}
 
 <slot />

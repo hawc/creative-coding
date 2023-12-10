@@ -1,9 +1,11 @@
 <script lang="ts">
-  import { getPane, initPane } from '$lib/client/canvasUtils';
-  import { midiReady } from '$lib/store';
-  import P5, { type Sketch } from 'p5-svelte';
+  import P5 from 'p5-svelte/P5.svelte';
+  import type { Sketch } from 'p5-svelte/types';
   import { onMount, onDestroy } from 'svelte';
   import type { Pane } from 'tweakpane/dist/types/pane/pane';
+
+  import { getPane, initPane } from '$lib/client/canvasUtils';
+  import { debug, midiReady } from '$lib/store';
 
   type Params = {
     [key: string]: number | string | boolean;
@@ -25,6 +27,12 @@
 
         folder.addBinding(params, 'debug');
         folder.addBinding(params, 'fullScreen');
+
+        folder.on('change', (event) => {
+          if ('key' in event.target && event.target.key === 'debug') {
+            debug.set(params.debug as boolean);
+          }
+        });
       }
     });
 

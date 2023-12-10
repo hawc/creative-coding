@@ -1,13 +1,21 @@
 <script lang="ts">
+  import Button from '@partnerds-de/ui/components/Button.svelte';
+  import { onMount } from 'svelte';
+
   import { appendMessage } from '$lib';
   import {
     establishWebSocket,
     webSocketEstablished,
     requestData
   } from '$lib/client/webSocketUtils';
-  import { onMount } from 'svelte';
+  import { debug } from '$lib/store';
 
   let messages = [''];
+  let allowLogging = false;
+
+  debug.subscribe((value) => {
+    allowLogging = value;
+  });
 
   onMount(async () => {
     establishWebSocket();
@@ -18,7 +26,10 @@
   }
 </script>
 
-{webSocketEstablished ? 'connected' : 'not connected'}
-<button type="button" on:click={() => setMessage()}>set message</button>
-<p>WS-Messages:<br />{messages}</p>
+{#if allowLogging}
+  <Button on:click={() => setMessage()}>set message</Button>
+  {webSocketEstablished ? 'connected' : 'not connected'}
+  <p>WS-Messages:<br />{messages}</p>
+{/if}
+
 <slot />

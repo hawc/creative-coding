@@ -1,8 +1,10 @@
+import type { Handle } from '@sveltejs/kit';
+import type { WebSocket } from 'ws';
+
 import { building } from '$app/environment';
 import { GlobalThisWSS } from '$lib/server/webSocketUtils';
-import type { Handle } from '@sveltejs/kit';
 import type { ExtendedGlobal } from '$lib/server/webSocketUtils';
-import type { WebSocket } from 'ws';
+
 
 // This can be extracted into a separate file
 let wssInitialized = false;

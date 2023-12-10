@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
 import type { WebSocket } from 'ws';
+
+import type { RequestHandler } from './$types';
 
 export const GET = (async ({ url, locals }) => {
   if (locals.wss) {
