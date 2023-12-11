@@ -5,6 +5,8 @@ export function sine(height: number, amplitude: number) {
   return (frequency: number, reset = false) => {
     if (reset) {
       y = 0;
+      x = 0;
+      return 0;
     }
     y = height / 2 + amplitude * Math.sin(x / frequency);
     x = x + 1;

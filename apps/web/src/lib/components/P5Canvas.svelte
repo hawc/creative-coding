@@ -5,7 +5,7 @@
   import type { Pane } from 'tweakpane/dist/types/pane/pane';
 
   import { getPane, initPane } from '$lib/client/canvasUtils';
-  import { debug, midiReady } from '$lib/store';
+  import { debug, midiReady, rerender, paneReady } from '$lib/store';
 
   type Params = {
     [key: string]: number | string | boolean;
@@ -17,6 +17,8 @@
   let pane: Pane;
 
   onMount(async () => {
+    await initPane();
+
     midiReady.subscribe((value) => {
       if (value) {
         pane = getPane();
@@ -29,14 +31,17 @@
         folder.addBinding(params, 'fullScreen');
 
         folder.on('change', (event) => {
+          // force rerender on global settings change
+          rerender.set(Math.random().toString());
           if ('key' in event.target && event.target.key === 'debug') {
             debug.set(params.debug as boolean);
           }
         });
+
+        paneReady.set(true);
       }
     });
 
-    await initPane();
     midiReady.set(true);
   });
 
@@ -44,11 +49,12 @@
     if (pane) {
       pane.dispose();
     }
+    paneReady.set(false);
   });
 </script>
 
-<div class="absolute top-0 left-0 grid place-items-center h-screen w-screen -z-10 bg-slate-100">
-  <div class="shadow-xl bg-white">
+<div class="absolute top-0 left-0 grid place-items-center h-screen w-screen -z-10 bg-gray-900">
+  <div class="shadow-xl bg-black">
     <P5 {sketch} />
   </div>
 </div>

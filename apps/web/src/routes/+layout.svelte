@@ -4,20 +4,26 @@
 
   import MidiReceiver from '$lib/components/MidiReceiver.svelte';
   import WebSocketReceiver from '$lib/components/WebSocketReceiver.svelte';
-  import { darkScreen } from '$lib/store';
+  import { darkScreen, rerender } from '$lib/store';
 
   let textColorClass = 'text-red';
+  let rerenderKey = '';
 
   darkScreen.subscribe((value) => {
-    console.log('sub', value);
     textColorClass = value ? 'text-white' : 'text-black';
+  });
+
+  rerender.subscribe((value) => {
+    rerenderKey = value;
   });
 </script>
 
 <PageFrame {textColorClass}>
   <MidiReceiver>
     <WebSocketReceiver>
-      <slot />
+      {#key rerenderKey}
+        <slot />
+      {/key}
     </WebSocketReceiver>
   </MidiReceiver>
 </PageFrame>
