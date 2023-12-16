@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Canvas , T } from '@threlte/core';
-    import { OrbitControls } from '@threlte/extras';
+  import { Canvas, T } from '@threlte/core';
+  import { OrbitControls } from '@threlte/extras';
 </script>
 
 <main>

@@ -1,43 +1,33 @@
 <script lang="ts">
-  import { T, useTask, useThrelte } from '@threlte/core';
-  import { OrbitControls, Grid, Text } from '@threlte/extras';
-  import { tick } from 'svelte';
+  import { T } from '@threlte/core';
+  import { OrbitControls, Text } from '@threlte/extras';
 
-  import { PARAMS } from './params';
+  import type { Config } from '$lib/client/canvasUtils';
+  import { debug } from '$lib/store';
 
-  const { renderStage, autoRender, renderer, scene, camera } = useThrelte();
-
-  export let diameter = 5;
-
-  autoRender.set(false);
-  useTask(
-    async () => {
-      await tick();
-      renderer.render(scene, camera.current);
-    },
-    { stage: renderStage, autoInvalidate: false }
-  );
-
-  console.log('diameter', diameter);
-  console.log('store diameter', $PARAMS.diameter);
-  let color = $PARAMS.color;
+  export let object: Config;
 </script>
 
 <T.PerspectiveCamera makeDefault position={[-10, 20, 10]} fov={15}>
   <OrbitControls
-    enableZoom={false}
-    enablePan={false}
+    enableZoom={$debug}
+    enablePan={$debug}
     enableDamping
     autoRotate
     autoRotateSpeed={1.5}
   />
 </T.PerspectiveCamera>
 
-<Grid sectionColor="#FF3E00" />
-<Text text={'test'} {color} anchorX={0} anchorY={0} />
-<T.DirectionalLight intensity={0.8} position.x={10} position.y={10} />
+<Text
+  scale={100 * object.diameter.value}
+  text={'test'}
+  color={object.color.value}
+  anchorX={0}
+  anchorY={0}
+/>
+<T.DirectionalLight intensity={0.8 * object.diameter.value} position.x={10} position.y={10} />
 <T.AmbientLight intensity={0.02} />
-<T.Mesh scale={1 * diameter}>
+<T.Mesh scale={(1 * object.sineFrequency.value) / 10}>
   <T.SphereGeometry args={[1, 32, 32]} />
   <T.MeshStandardMaterial color={'#faf00'} roughness={0.2} />
 </T.Mesh>

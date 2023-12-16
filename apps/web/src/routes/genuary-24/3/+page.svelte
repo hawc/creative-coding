@@ -1,40 +1,38 @@
 <script lang="ts">
   import { Canvas } from '@threlte/core';
-  import { onDestroy, onMount } from 'svelte';
-  import { derived } from 'svelte/store';
-  import type { Pane } from 'tweakpane/dist/types/pane/pane';
+  import { onMount } from 'svelte';
 
-  import { PARAMS, paneSetup } from './params';
   import Scene from './scene.svelte';
+  import { PARAMS } from './store';
 
+  import { canvasDimensions } from '$lib/client/canvasUtils';
+  import Pane from '$lib/components/Pane.svelte';
   import PaneConnector from '$lib/components/PaneConnector.svelte';
-  import { darkScreen, midiControls, midiReady } from '$lib/store';
+  import { darkScreen, fullScreen, midiControls, midiReady } from '$lib/store';
 
-  let destroyP5 = () => {};
   darkScreen.set(true);
+  let dimensions = canvasDimensions;
 
-  let pane: Pane;
+  let innerWidth = dimensions[0];
+  let innerHeight = dimensions[1];
 
-  onDestroy(async () => {
-    console.log('destroy');
-    destroyP5();
-  });
+  const { diameter, sineFrequency } = $PARAMS;
 
   const midiSetup = () => {
     midiControls.subscribe((controlsData) => {
       switch (controlsData.key) {
         case 0:
           // todo: fix: don't trigger on first render (resets selection on rerender)
-          $PARAMS.diameter = controlsData.velocity;
+          diameter.value = controlsData.velocity;
           break;
         case 1:
           // todo: use same logic as TweakPane
-          $PARAMS.sineFrequency = Math.max(10, Math.floor(controlsData.velocity * 100));
+          sineFrequency.value = Math.max(
+            (sineFrequency.options?.max as number | undefined) ?? 10,
+            Math.floor(controlsData.velocity * 100)
+          );
           break;
         default:
-      }
-      if (pane) {
-        pane.refresh();
       }
     });
   };
@@ -44,15 +42,19 @@
       midiSetup();
     });
   });
-
-  const diameter = derived(PARAMS, (pb) => pb.diameter);
-  console.log('diameter', diameter);
 </script>
 
-{$PARAMS.diameter}
+<svelte:window bind:innerWidth bind:innerHeight />
 
-<PaneConnector params={$PARAMS} {paneSetup}>
-  <Canvas>
-    <Scene diameter={$PARAMS.diameter} />
+<Pane bind:object={$PARAMS} />
+<PaneConnector>
+  <Canvas
+    renderMode="always"
+    size={{
+      width: $fullScreen ? innerWidth : dimensions[0],
+      height: $fullScreen ? innerHeight : dimensions[1]
+    }}
+  >
+    <Scene bind:object={$PARAMS} />
   </Canvas>
 </PaneConnector>

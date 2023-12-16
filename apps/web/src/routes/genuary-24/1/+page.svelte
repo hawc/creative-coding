@@ -1,21 +1,23 @@
 <script lang="ts">
   import type p5 from 'p5';
   import type { Sketch } from 'p5-svelte';
-  import { onDestroy, onMount } from 'svelte';
-  import type { Pane } from 'tweakpane/dist/types/pane/pane';
+  import { onMount } from 'svelte';
 
   import { PARAMS } from './params';
 
-  import { getDimensions, initPaneFolder } from '$lib/client/canvasUtils';
+  import { canvasDimensions } from '$lib/client/canvasUtils';
   import { sine } from '$lib/client/mathUtils';
+  import Pane from '$lib/components/Pane.svelte';
   import PaneConnector from '$lib/components/PaneConnector.svelte';
-  import { darkScreen, midiControls, midiReady } from '$lib/store';
+  import { darkScreen, fullScreen, midiControls, midiReady } from '$lib/store';
 
   let getSine = sine(0, 1);
-  let destroyP5 = () => {};
   darkScreen.set(true);
 
-  let pane: Pane;
+  const { diameter, sineFrequency, color } = $PARAMS;
+
+  let innerWidth = canvasDimensions[0];
+  let innerHeight = canvasDimensions[1];
 
   const sketch: Sketch = (p5: p5) => {
     let radius = 150;
@@ -25,7 +27,7 @@
     let centerY = window.innerHeight / 2;
 
     p5.setup = () => {
-      const dimensions = getDimensions($PARAMS.fullScreen);
+      const dimensions = $fullScreen ? [innerWidth, innerHeight] : canvasDimensions;
       p5.createCanvas(dimensions[0], dimensions[1]);
       p5.background('#000000');
 
@@ -49,33 +51,21 @@
           p5.radians(Math.random() * 360)
         );
       }
-
-      destroyP5 = () => p5.remove();
     };
 
     p5.draw = () => {
       p5.strokeWeight(2);
-      p5.fill($PARAMS.color);
+      p5.fill(color.value);
       let x = centerX + radius * p5.cos(angle);
       let y = centerY + radius * p5.sin(angle);
-      const ellipseSize = 100 * $PARAMS.diameter * getSine($PARAMS.sineFrequency);
-      p5.ellipse(x, y, ellipseSize, ellipseSize).fill($PARAMS.color);
+      const ellipseSize = 100 * diameter.value * getSine(sineFrequency.value);
+      p5.ellipse(x, y, ellipseSize, ellipseSize).fill(color.value);
 
       angle = angle + speed;
     };
-  };
 
-  onDestroy(async () => {
-    console.log('destroy');
-    destroyP5();
-  });
-
-  const paneSetup = () => {
-    console.log('initPaneFolder');
-    initPaneFolder('Render Options', $PARAMS, {
-      color: null,
-      diameter: { max: 1, min: 0, step: 0.01 },
-      sineFrequency: { max: 40, min: 5, step: 1 }
+    fullScreen.subscribe(() => {
+      p5.setup();
     });
   };
 
@@ -84,16 +74,13 @@
       switch (controlsData.key) {
         case 0:
           // todo: fix: don't trigger on first render (resets selection on rerender)
-          $PARAMS.diameter = controlsData.velocity;
+          diameter.value = controlsData.velocity;
           break;
         case 1:
           // todo: use same logic as TweakPane
-          $PARAMS.sineFrequency = Math.max(10, Math.floor(controlsData.velocity * 100));
+          sineFrequency.value = Math.max(10, Math.floor(controlsData.velocity * 100));
           break;
         default:
-      }
-      if (pane) {
-        pane.refresh();
       }
     });
   };
@@ -105,4 +92,7 @@
   });
 </script>
 
-<PaneConnector {sketch} params={$PARAMS} {paneSetup} />
+<svelte:window bind:innerWidth bind:innerHeight />
+
+<Pane bind:object={$PARAMS} />
+<PaneConnector {sketch} />
