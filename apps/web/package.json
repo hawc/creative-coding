@@ -27,6 +27,7 @@
     "@threlte/theatre": "^2.1.4",
     "nanoid": "^4.0.2",
     "p5-svelte": "^3.1.2",
+    "svelte-tweakpane-ui": "^1.0.1",
     "three": "^0.159.0",
     "tweakpane": "^4.0.1",
     "ws": "8.13.0"

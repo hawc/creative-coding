@@ -6,10 +6,10 @@
 
   import { PARAMS } from './params';
 
-  import { getDimensions, getPane } from '$lib/client/canvasUtils';
+  import { getDimensions, initPaneFolder } from '$lib/client/canvasUtils';
   import { sine } from '$lib/client/mathUtils';
-  import P5Canvas from '$lib/components/P5Canvas.svelte';
-  import { darkScreen, midiControls, midiReady, paneReady } from '$lib/store';
+  import PaneConnector from '$lib/components/PaneConnector.svelte';
+  import { darkScreen, midiControls, midiReady } from '$lib/store';
 
   let getSine = sine(0, 1);
   let destroyP5 = () => {};
@@ -25,7 +25,7 @@
     let centerY = window.innerHeight / 2;
 
     p5.setup = () => {
-      const dimensions = getDimensions(PARAMS.fullScreen);
+      const dimensions = getDimensions($PARAMS.fullScreen);
       p5.createCanvas(dimensions[0], dimensions[1]);
       p5.background('#000000');
 
@@ -55,11 +55,11 @@
 
     p5.draw = () => {
       p5.strokeWeight(2);
-      p5.fill(PARAMS.color);
+      p5.fill($PARAMS.color);
       let x = centerX + radius * p5.cos(angle);
       let y = centerY + radius * p5.sin(angle);
-      const ellipseSize = 100 * PARAMS.diameter * getSine(PARAMS.sineFrequency);
-      p5.ellipse(x, y, ellipseSize, ellipseSize).fill(PARAMS.color);
+      const ellipseSize = 100 * $PARAMS.diameter * getSine($PARAMS.sineFrequency);
+      p5.ellipse(x, y, ellipseSize, ellipseSize).fill($PARAMS.color);
 
       angle = angle + speed;
     };
@@ -70,44 +70,39 @@
     destroyP5();
   });
 
+  const paneSetup = () => {
+    console.log('initPaneFolder');
+    initPaneFolder('Render Options', $PARAMS, {
+      color: null,
+      diameter: { max: 1, min: 0, step: 0.01 },
+      sineFrequency: { max: 40, min: 5, step: 1 }
+    });
+  };
+
+  const midiSetup = () => {
+    midiControls.subscribe((controlsData) => {
+      switch (controlsData.key) {
+        case 0:
+          // todo: fix: don't trigger on first render (resets selection on rerender)
+          $PARAMS.diameter = controlsData.velocity;
+          break;
+        case 1:
+          // todo: use same logic as TweakPane
+          $PARAMS.sineFrequency = Math.max(10, Math.floor(controlsData.velocity * 100));
+          break;
+        default:
+      }
+      if (pane) {
+        pane.refresh();
+      }
+    });
+  };
+
   onMount(async () => {
-    midiReady.subscribe((isMidiReady) => {
-      paneReady.subscribe((isPaneReady) => {
-        if (isMidiReady) {
-          if (isPaneReady && !pane) {
-            pane = getPane();
-
-            const folder = pane.addFolder({
-              title: 'Render Options'
-            });
-
-            folder.addBinding(PARAMS, 'width');
-            folder.addBinding(PARAMS, 'height');
-            folder.addBinding(PARAMS, 'color');
-            folder.addBinding(PARAMS, 'diameter', { max: 1, min: 0, step: 0.01 });
-            folder.addBinding(PARAMS, 'sineFrequency', { max: 40, min: 5, step: 1 });
-          }
-        }
-      });
-
-      midiControls.subscribe((controlsData) => {
-        switch (controlsData.key) {
-          case 0:
-            // todo: fix: don't trigger on first render (resets selection on rerender)
-            PARAMS.diameter = controlsData.velocity;
-            break;
-          case 1:
-            // todo: use same logic as TweakPane
-            PARAMS.sineFrequency = Math.max(10, Math.floor(controlsData.velocity * 100));
-            break;
-          default:
-        }
-        if (pane) {
-          pane.refresh();
-        }
-      });
+    midiReady.subscribe(() => {
+      midiSetup();
     });
   });
 </script>
 
-<P5Canvas {sketch} params={PARAMS} />
+<PaneConnector {sketch} params={$PARAMS} {paneSetup} />
