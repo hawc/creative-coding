@@ -8,13 +8,10 @@
   import { canvasDimensions } from '$lib/client/canvasUtils';
   import Pane from '$lib/components/Pane.svelte';
   import PaneConnector from '$lib/components/PaneConnector.svelte';
-  import { darkScreen, fullScreen, midiControls, midiReady } from '$lib/store';
+  import { darkScreen, fullScreen, midiControls, midiReady, screenDimensions } from '$lib/store';
 
   darkScreen.set(true);
   let dimensions = canvasDimensions;
-
-  let innerWidth = dimensions[0];
-  let innerHeight = dimensions[1];
 
   const { diameter, sineFrequency } = $PARAMS;
 
@@ -44,15 +41,13 @@
   });
 </script>
 
-<svelte:window bind:innerWidth bind:innerHeight />
-
 <Pane bind:object={$PARAMS} />
 <PaneConnector>
   <Canvas
     renderMode="always"
     size={{
-      width: $fullScreen ? innerWidth : dimensions[0],
-      height: $fullScreen ? innerHeight : dimensions[1]
+      width: $fullScreen ? $screenDimensions[0] : dimensions[0],
+      height: $fullScreen ? $screenDimensions[1] : dimensions[1]
     }}
   >
     <Scene bind:object={$PARAMS} />

@@ -14,13 +14,11 @@
   });
 
   darkScreen.subscribe((value) => {
-    screenBgColorClass = value ? 'bg-black' : '';
+    screenBgColorClass = value ? 'bg-black text-white' : 'text-black';
   });
 </script>
 
-<div
-  class={`absolute top-0 left-0 grid place-items-center h-screen w-screen -z-10 ${bgColorClass}`}
->
+<div class={`h-full grid place-items-center -z-10 ${bgColorClass}`}>
   <div class={`shadow-xl ${screenBgColorClass}`}>
     {#if sketch}
       <P5 {sketch} />

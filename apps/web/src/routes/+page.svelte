@@ -1,57 +1,59 @@
 <script lang="ts">
-  let webSocketEstablished = false;
-  let ws: WebSocket | null = null;
-  let log: string[] = [];
+  import { Link } from '@partnerds-de/ui';
 
-  const logEvent = (str: string) => {
-    log = [...log, str];
-  };
+  // let webSocketEstablished = false;
+  // let ws: WebSocket | null = null;
+  // let log: string[] = [];
 
-  const establishWebSocket = () => {
-    if (webSocketEstablished) return;
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    ws = new WebSocket(`${protocol}//${window.location.host}/websocket`);
-    ws.addEventListener('open', (event) => {
-      webSocketEstablished = true;
-      console.log('[websocket] connection open', event);
-      logEvent('[websocket] connection open');
-    });
-    ws.addEventListener('close', (event) => {
-      console.log('[websocket] connection closed', event);
-      logEvent('[websocket] connection closed');
-    });
-    ws.addEventListener('message', (event) => {
-      console.log('[websocket] message received', event);
-      logEvent(`[websocket] message received: ${event.data}`);
-    });
-  };
+  // const logEvent = (str: string) => {
+  //   log = [...log, str];
+  // };
 
-  const requestData = async () => {
-    const res = await fetch('/api/test');
-    const data = await res.json();
-    console.log('Data from GET endpoint', data);
-    logEvent(`[GET] data received: ${JSON.stringify(data)}`);
-  };
+  // const establishWebSocket = () => {
+  //   if (webSocketEstablished) return;
+  //   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  //   ws = new WebSocket(`${protocol}//${window.location.host}/websocket`);
+  //   ws.addEventListener('open', (event) => {
+  //     webSocketEstablished = true;
+  //     console.log('[websocket] connection open', event);
+  //     logEvent('[websocket] connection open');
+  //   });
+  //   ws.addEventListener('close', (event) => {
+  //     console.log('[websocket] connection closed', event);
+  //     logEvent('[websocket] connection closed');
+  //   });
+  //   ws.addEventListener('message', (event) => {
+  //     console.log('[websocket] message received', event);
+  //     logEvent(`[websocket] message received: ${event.data}`);
+  //   });
+  // };
+
+  // const requestData = async () => {
+  //   const res = await fetch('/api/test');
+  //   const data = await res.json();
+  //   console.log('Data from GET endpoint', data);
+  //   logEvent(`[GET] data received: ${JSON.stringify(data)}`);
+  // };
 </script>
 
-<main>
-  <h1 class="bg-green">SvelteKit with WebSocket Integration</h1>
+<main class="p-2 pt-3">
+  <!-- <h1 class="bg-green">SvelteKit with WebSocket Integration</h1>
 
   <button disabled={webSocketEstablished} on:click={() => establishWebSocket()}>
     Establish WebSocket connection
   </button>
 
-  <button on:click={() => requestData()}> Request Data from GET endpoint </button>
-
-  <ul>
+  <button on:click={() => requestData()}> Request Data from GET endpoint </button> -->
+  <!-- <ul>
     {#each log as event}
       <li>{event}</li>
     {/each}
+  </ul> -->
+  <p>This is a monorepo for archiving various approaches to generative coding.</p>
+  <h2>Coding Challenges</h2>
+  <ul>
+    <li>
+      <Link to="/genuary-24">Genuary '24</Link>
+    </li>
   </ul>
 </main>
-
-<style>
-  main {
-    font-family: sans-serif;
-  }
-</style>

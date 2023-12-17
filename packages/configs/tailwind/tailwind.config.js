@@ -12,6 +12,9 @@ const config = {
       width: {
         screen: ['100vw', '100dvw'],
       },
+      fontFamily: {
+        'body': ['"PT Mono"', 'monospace'],
+      }
     },
   }
 };

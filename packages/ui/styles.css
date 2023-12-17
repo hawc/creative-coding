@@ -24,4 +24,33 @@
   --tp-label-foreground-color: hsla(0, 0%, 50%, 1.00);
   --tp-monitor-background-color: hsla(0, 0%, 8%, 1.00);
   --tp-monitor-foreground-color: hsla(0, 0%, 48%, 1.00);
+
+  --golden-cut: 1.618;
+}
+
+@font-face {
+  font-family: "PT Mono";
+  src: url("./static/fonts/PT_Mono/PTMono-Regular.ttf");
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+* + p,
+* + h1,
+* + h2,
+* + h3,
+* + h4,
+* + h5 {
+  margin-top: 0.5rem;
+}
+
+p {
+  margin-bottom: 0.5rem;
 }
