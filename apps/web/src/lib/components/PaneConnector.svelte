@@ -11,6 +11,7 @@
 
   let bgColorClass = '';
   let screenBgColorClass = '';
+  export let move = (event) => {};
 
   onMount(async () => {
     darkScreen.subscribe((value) => {
@@ -27,7 +28,7 @@
 </script>
 
 <div class={`h-full grid place-items-center -z-10 ${bgColorClass}`}>
-  <div class={`shadow-xl ${screenBgColorClass}`}>
+  <div role="figure" on:mousemove={move} class={`shadow-xl ${screenBgColorClass}`}>
     {#if sketch}
       <P5 {sketch} />
     {:else}
