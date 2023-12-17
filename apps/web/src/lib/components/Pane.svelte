@@ -10,6 +10,7 @@
 
   let expandedGlobal = true;
   let expanded = true;
+  let expandedDebug = true;
 </script>
 
 <Pane position="fixed" y={50} title="">
@@ -26,10 +27,12 @@
         <AutoValue label={key} bind:value={object[key].value} />
       {/if}
     {/each}
-    {#if $debug}
+  </Folder>
+  {#if $debug}
+    <Folder bind:expanded={expandedDebug} title="Debug">
       <Element>
         <Log />
       </Element>
-    {/if}
-  </Folder>
+    </Folder>
+  {/if}
 </Pane>
