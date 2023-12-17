@@ -1,20 +1,20 @@
 <script lang="ts">
   import type p5 from 'p5';
   import type { Sketch } from 'p5-svelte';
-  import { onMount } from 'svelte';
 
   import { PARAMS } from './params';
 
   import { canvasDimensions } from '$lib/client/canvasUtils';
   import { sine } from '$lib/client/mathUtils';
+  import type { MidiHandler } from '$lib/client/webMidiUtils';
   import Pane from '$lib/components/Pane.svelte';
   import PaneConnector from '$lib/components/PaneConnector.svelte';
-  import { darkScreen, fullScreen, midiControls, midiReady } from '$lib/store';
+  import { darkScreen, fullScreen } from '$lib/store';
+
+  darkScreen.set(true);
+  const { diameter, sineFrequency, color } = $PARAMS;
 
   let getSine = sine(0, 1);
-  darkScreen.set(true);
-
-  const { diameter, sineFrequency, color } = $PARAMS;
 
   let innerWidth = canvasDimensions[0];
   let innerHeight = canvasDimensions[1];
@@ -69,30 +69,22 @@
     });
   };
 
-  const midiSetup = () => {
-    midiControls.subscribe((controlsData) => {
-      switch (controlsData.key) {
-        case 0:
-          // todo: fix: don't trigger on first render (resets selection on rerender)
-          diameter.value = controlsData.velocity;
-          break;
-        case 1:
-          // todo: use same logic as TweakPane
-          sineFrequency.value = Math.max(10, Math.floor(controlsData.velocity * 100));
-          break;
-        default:
-      }
-    });
+  const midiFunc: MidiHandler = (key, velocity) => {
+    switch (key) {
+      case 0:
+        // todo: fix: don't trigger on first render (resets selection on rerender)
+        diameter.value = velocity;
+        break;
+      case 1:
+        // todo: use same scaling logic as TweakPane
+        sineFrequency.value = Math.max(10, Math.floor(velocity * 100));
+        break;
+      default:
+    }
   };
-
-  onMount(async () => {
-    midiReady.subscribe(() => {
-      midiSetup();
-    });
-  });
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
 <Pane bind:object={$PARAMS} />
-<PaneConnector {sketch} />
+<PaneConnector {sketch} {midiFunc} />

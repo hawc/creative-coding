@@ -3,21 +3,27 @@
 
   import { roundDecimals } from '$lib/client/mathUtils';
   import { initMIDIAccess, type MidiHandler } from '$lib/client/webMidiUtils';
-  import { debug, messages } from '$lib/store';
+  import { debug, messages, midiReady } from '$lib/store';
   import { midiControls } from '$lib/store.js';
 
-  let allowLogging = $debug;
+  let allowLogging = false;
+
+  debug.subscribe((isDebugEnabled) => (allowLogging = isDebugEnabled));
 
   onMount(async () => {
     const handler: MidiHandler = (key, velocity) => {
       if (allowLogging) {
-        messages.set([...$messages, `${key}.${velocity}`]);
+        messages.set([
+          ...$messages,
+          `MIDI: 🔑 ${key} 🎚️ ${velocity} 📈 ${roundDecimals(velocity / 127)}`
+        ]);
       }
 
       $midiControls = { key, velocity: roundDecimals(velocity / 127) };
     };
 
-    await initMIDIAccess(handler);
+    const isReady = await initMIDIAccess(handler);
+    midiReady.set(isReady);
   });
 </script>
 

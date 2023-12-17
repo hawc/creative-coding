@@ -22,14 +22,15 @@ export async function initMIDIAccess(
 ) {
   try {
     const midiAccess = await navigator.requestMIDIAccess();
-    console.log('MIDI ready!');
     midiAccess.inputs.forEach((entry) => {
       const offset = entry.id in deviceOffset ? deviceOffset[entry.id] : 0;
       entry.onmidimessage = (event) => {
         onMIDIMessage(event, offset, handler);
       };
     });
+    return true;
   } catch (err) {
     console.log('Failed to get MIDI access - ' + err);
+    return false;
   }
 }

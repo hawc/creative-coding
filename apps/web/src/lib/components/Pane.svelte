@@ -6,9 +6,10 @@
 
   import { BASE_PARAMS, debug } from '$lib/store';
 
+  export let object: Bindable;
+
   let expandedGlobal = true;
   let expanded = true;
-  export let object: Bindable;
 </script>
 
 <Pane position="fixed" y={50} title="">

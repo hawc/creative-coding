@@ -54,3 +54,17 @@ h5 {
 p {
   margin-bottom: 0.5rem;
 }
+
+body {
+  scrollbar-color: red green;
+}
+
+body::-webkit-scrollbar-track {
+  background: black;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: green;
+  border-radius: 6px;
+  border: 3px solid black;
+}

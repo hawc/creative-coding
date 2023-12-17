@@ -1,48 +1,38 @@
 <script lang="ts">
   import { Canvas } from '@threlte/core';
-  import { onMount } from 'svelte';
 
   import Scene from './scene.svelte';
   import { PARAMS } from './store';
 
   import { canvasDimensions } from '$lib/client/canvasUtils';
+  import type { MidiHandler } from '$lib/client/webMidiUtils';
   import Pane from '$lib/components/Pane.svelte';
   import PaneConnector from '$lib/components/PaneConnector.svelte';
-  import { darkScreen, fullScreen, midiControls, midiReady, screenDimensions } from '$lib/store';
+  import { darkScreen, fullScreen, screenDimensions } from '$lib/store';
 
   darkScreen.set(true);
   let dimensions = canvasDimensions;
 
-  const { diameter, sineFrequency } = $PARAMS;
-
-  const midiSetup = () => {
-    midiControls.subscribe((controlsData) => {
-      switch (controlsData.key) {
-        case 0:
-          // todo: fix: don't trigger on first render (resets selection on rerender)
-          diameter.value = controlsData.velocity;
-          break;
-        case 1:
-          // todo: use same logic as TweakPane
-          sineFrequency.value = Math.max(
-            (sineFrequency.options?.max as number | undefined) ?? 10,
-            Math.floor(controlsData.velocity * 100)
-          );
-          break;
-        default:
-      }
-    });
+  let midiFunc: MidiHandler = (key, velocity) => {
+    switch (key) {
+      case 0:
+        // todo: fix: don't trigger on first render (resets selection on rerender)
+        $PARAMS.diameter.value = velocity;
+        break;
+      case 1:
+        // todo: use same scaling logic as TweakPane
+        $PARAMS.sineFrequency.value = Math.max(
+          ($PARAMS.sineFrequency.options?.max as number | undefined) ?? 10,
+          Math.floor(velocity * 100)
+        );
+        break;
+      default:
+    }
   };
-
-  onMount(async () => {
-    midiReady.subscribe(() => {
-      midiSetup();
-    });
-  });
 </script>
 
 <Pane bind:object={$PARAMS} />
-<PaneConnector>
+<PaneConnector {midiFunc}>
   <Canvas
     renderMode="always"
     size={{
