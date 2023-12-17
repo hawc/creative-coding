@@ -13,4 +13,5 @@ export const fullScreen = derived(BASE_PARAMS, (base) => base.fullScreen);
 export const darkScreen = writable(false);
 export const midiReady = writable(false);
 export const rerender = writable('0');
+export const messages = writable([] as string[]);
 export const screenDimensions = writable([0, 0]);

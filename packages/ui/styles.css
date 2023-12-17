@@ -30,7 +30,7 @@
 
 @font-face {
   font-family: "PT Mono";
-  src: url("./static/fonts/PT_Mono/PTMono-Regular.ttf");
+  src: url("@partnerds-de/ui/static/fonts/PT_Mono/PTMono-Regular.ttf");
 }
 
 h1,

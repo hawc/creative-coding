@@ -3,16 +3,15 @@
 
   import { roundDecimals } from '$lib/client/mathUtils';
   import { initMIDIAccess, type MidiHandler } from '$lib/client/webMidiUtils';
-  import { debug } from '$lib/store';
+  import { debug, messages } from '$lib/store';
   import { midiControls } from '$lib/store.js';
 
-  let messages = '';
   let allowLogging = $debug;
 
   onMount(async () => {
     const handler: MidiHandler = (key, velocity) => {
       if (allowLogging) {
-        messages = `${key}.${velocity}`;
+        messages.set([...$messages, `${key}.${velocity}`]);
       }
 
       $midiControls = { key, velocity: roundDecimals(velocity / 127) };
@@ -21,9 +20,5 @@
     await initMIDIAccess(handler);
   });
 </script>
-
-{#if allowLogging}
-  <p>Midi-Messages:<br />{messages}</p>
-{/if}
 
 <slot />

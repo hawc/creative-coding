@@ -20,7 +20,7 @@
 
 <Text
   scale={100 * object.diameter.value}
-  text={'test'}
+  text={'wurst'}
   color={object.color.value}
   anchorX={0}
   anchorY={0}

@@ -1,8 +1,10 @@
 <script lang="ts">
   import type { Bindable } from '@tweakpane/core';
-  import { Folder, AutoObject, Slider, AutoValue, Pane } from 'svelte-tweakpane-ui';
+  import { Folder, AutoObject, Slider, AutoValue, Element, Pane } from 'svelte-tweakpane-ui';
 
-  import { BASE_PARAMS } from '$lib/store';
+  import Log from './Log.svelte';
+
+  import { BASE_PARAMS, debug } from '$lib/store';
 
   let expandedGlobal = true;
   let expanded = true;
@@ -23,5 +25,10 @@
         <AutoValue label={key} bind:value={object[key].value} />
       {/if}
     {/each}
+    {#if $debug}
+      <Element>
+        <Log />
+      </Element>
+    {/if}
   </Folder>
 </Pane>
