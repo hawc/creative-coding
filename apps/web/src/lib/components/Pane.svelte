@@ -9,7 +9,7 @@
   export let object: Bindable;
 </script>
 
-<Pane title="">
+<Pane position="fixed" y={50} title="">
   <Folder bind:expanded={expandedGlobal} title="Global">
     <AutoObject bind:object={$BASE_PARAMS} />
   </Folder>

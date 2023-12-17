@@ -10,10 +10,7 @@
   let screenBgColorClass = '';
 
   darkScreen.subscribe((value) => {
-    bgColorClass = value ? 'bg-gray-900' : '';
-  });
-
-  darkScreen.subscribe((value) => {
+    bgColorClass = value ? 'bg-neutral-900' : '';
     screenBgColorClass = value ? 'bg-black text-white' : 'text-black';
   });
 </script>
