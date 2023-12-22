@@ -1,14 +1,14 @@
 <script lang="ts">
   import type p5 from 'p5';
   import type { Sketch } from 'p5-svelte';
+  import P5 from 'p5-svelte/P5.svelte';
 
   import { PARAMS } from './params';
 
   import { canvasDimensions } from '$lib/client/canvasUtils';
   import { sine } from '$lib/client/mathUtils';
   import type { MidiHandler } from '$lib/client/webMidiUtils';
-  import Pane from '$lib/components/Pane.svelte';
-  import PaneConnector from '$lib/components/PaneConnector.svelte';
+  import Renderer from '$lib/components/Renderer.svelte';
   import { darkScreen, fullScreen, messages } from '$lib/store';
 
   darkScreen.set(true);
@@ -81,5 +81,6 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<Pane bind:object={$PARAMS} />
-<PaneConnector move={handleMousemove} {sketch} {midiFunc} />
+<Renderer bind:object={$PARAMS} {handleMousemove} {midiFunc}>
+  <P5 {sketch} />
+</Renderer>

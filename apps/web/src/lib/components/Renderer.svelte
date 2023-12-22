@@ -1,17 +1,19 @@
 <script lang="ts">
-  import P5 from 'p5-svelte/P5.svelte';
-  import type { Sketch } from 'p5-svelte/types';
+  import type { Bindable } from '@tweakpane/core';
   import { onMount } from 'svelte';
+
+  import Pane from './Pane.svelte';
 
   import type { MidiHandler } from '$lib/client/webMidiUtils';
   import { darkScreen, midiControls, midiReady } from '$lib/store';
 
-  export let sketch: Sketch | undefined = undefined;
-  export let midiFunc: MidiHandler = () => {};
-
   let bgColorClass = '';
   let screenBgColorClass = '';
-  export let move = (event) => {};
+
+  export let object: Bindable;
+  export let midiFunc: MidiHandler = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  export let handleMousemove = (event: MouseEvent) => {};
 
   onMount(async () => {
     darkScreen.subscribe((value) => {
@@ -27,12 +29,10 @@
   });
 </script>
 
+<Pane bind:object />
+
 <div class={`h-full grid place-items-center -z-10 ${bgColorClass}`}>
-  <div role="figure" on:mousemove={move} class={`shadow-xl ${screenBgColorClass}`}>
-    {#if sketch}
-      <P5 {sketch} />
-    {:else}
-      <slot />
-    {/if}
+  <div role="figure" on:mousemove={handleMousemove} class={`shadow-xl ${screenBgColorClass}`}>
+    <slot />
   </div>
 </div>
