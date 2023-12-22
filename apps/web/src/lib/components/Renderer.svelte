@@ -13,6 +13,9 @@
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   export let handleMousemove = (event: MouseEvent) => {};
 
+  const bgColorClass = darkScreen ? 'bg-neutral-900' : '';
+  const screenBgColorClass = darkScreen ? 'bg-black text-white' : 'text-black';
+
   const handleMidiMessage: MidiHandler = (key, velocity) => {
     let init = false;
     if (init) {
@@ -21,15 +24,7 @@
     init = true;
   };
 
-  let bgColorClass = '';
-  let screenBgColorClass = 'text-black';
-
   onMount(async () => {
-    if (darkScreen) {
-      bgColorClass = 'bg-neutral-900';
-      screenBgColorClass = 'bg-black text-white';
-    }
-
     midiReady.subscribe((isReady) => {
       if (isReady) {
         midiControls.subscribe(({ key, velocity }) => handleMidiMessage(key, velocity));

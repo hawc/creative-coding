@@ -7,19 +7,17 @@
   let log: HTMLElement;
 
   if (browser) {
-    onMount(() => {
-      const config = { childList: true };
-
-      const callback = (mutationsList: MutationRecord[]) => {
-        for (let mutation of mutationsList) {
-          if (mutation.type === 'childList') {
-            log?.scrollTo(0, log.scrollHeight);
-          }
+    const callback = (mutationsList: MutationRecord[]) => {
+      for (let mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          log?.scrollTo(0, log.scrollHeight);
         }
-      };
+      }
+    };
 
+    onMount(() => {
       const observer = new MutationObserver(callback);
-      observer.observe(log, config);
+      observer.observe(log, { childList: true });
     });
   }
 </script>

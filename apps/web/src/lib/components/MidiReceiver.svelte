@@ -10,18 +10,18 @@
 
   debug.subscribe((isDebugEnabled) => (allowLogging = isDebugEnabled));
 
+  const handler: MidiHandler = (key, velocity) => {
+    if (allowLogging) {
+      messages.set([
+        ...$messages,
+        `MIDI: 🔑 ${key} 🎚️ ${velocity} 📈 ${roundDecimals(velocity / 127)}`
+      ]);
+    }
+
+    $midiControls = { key, velocity: roundDecimals(velocity / 127) };
+  };
+
   onMount(async () => {
-    const handler: MidiHandler = (key, velocity) => {
-      if (allowLogging) {
-        messages.set([
-          ...$messages,
-          `MIDI: 🔑 ${key} 🎚️ ${velocity} 📈 ${roundDecimals(velocity / 127)}`
-        ]);
-      }
-
-      $midiControls = { key, velocity: roundDecimals(velocity / 127) };
-    };
-
     const isReady = await initMIDIAccess(handler);
     midiReady.set(isReady);
   });
