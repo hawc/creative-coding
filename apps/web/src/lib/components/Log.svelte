@@ -11,7 +11,6 @@
       const config = { childList: true };
 
       const callback = (mutationsList: MutationRecord[]) => {
-        console.log('callback');
         for (let mutation of mutationsList) {
           if (mutation.type === 'childList') {
             log?.scrollTo(0, log.scrollHeight);

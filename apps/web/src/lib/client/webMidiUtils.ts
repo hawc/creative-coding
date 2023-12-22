@@ -2,6 +2,8 @@ type DeviceOffsetConfig = { [key: string]: number };
 
 export type MidiHandler = (key: number, velocity: number) => void;
 
+export type MidiMapping = { [key: string]: MidiHandler };
+
 const deviceOffset: DeviceOffsetConfig = {
   '163286373': 32,
 }

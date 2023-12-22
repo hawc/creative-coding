@@ -5,32 +5,23 @@
   import { PARAMS } from './store';
 
   import { canvasDimensions } from '$lib/client/canvasUtils';
-  import type { MidiHandler } from '$lib/client/webMidiUtils';
+  import type { MidiMapping } from '$lib/client/webMidiUtils';
   import Renderer from '$lib/components/Renderer.svelte';
-  import { darkScreen, fullScreen, screenDimensions } from '$lib/store';
+  import { fullScreen, screenDimensions } from '$lib/store';
 
-  darkScreen.set(true);
   let dimensions = canvasDimensions;
 
-  let midiFunc: MidiHandler = (key, velocity) => {
-    switch (key) {
-      case 0:
-        // todo: fix: don't trigger on first render (resets selection on rerender)
-        $PARAMS.diameter.value = velocity;
-        break;
-      case 1:
-        // todo: use same scaling logic as TweakPane
-        $PARAMS.sineFrequency.value = Math.max(
-          ($PARAMS.sineFrequency.options?.max as number | undefined) ?? 10,
-          Math.floor(velocity * 100)
-        );
-        break;
-      default:
-    }
+  const midiMapping: MidiMapping = {
+    0: (key, velocity) => ($PARAMS.diameter.value = velocity),
+    1: (key, velocity) =>
+      ($PARAMS.sineFrequency.value = Math.max(
+        ($PARAMS.sineFrequency.options?.max as number | undefined) ?? 10,
+        Math.floor(velocity * 100)
+      ))
   };
 </script>
 
-<Renderer bind:object={$PARAMS} {midiFunc}>
+<Renderer darkScreen bind:params={$PARAMS} {midiMapping}>
   <Canvas
     renderMode="always"
     size={{
@@ -38,6 +29,6 @@
       height: $fullScreen ? $screenDimensions[1] : dimensions[1]
     }}
   >
-    <Scene object={$PARAMS} />
+    <Scene params={$PARAMS} />
   </Canvas>
 </Renderer>

@@ -4,32 +4,41 @@
 
   import Pane from './Pane.svelte';
 
-  import type { MidiHandler } from '$lib/client/webMidiUtils';
-  import { darkScreen, midiControls, midiReady } from '$lib/store';
+  import type { MidiHandler, MidiMapping } from '$lib/client/webMidiUtils';
+  import { midiControls, midiReady } from '$lib/store';
 
-  let bgColorClass = '';
-  let screenBgColorClass = '';
-
-  export let object: Bindable;
-  export let midiFunc: MidiHandler = () => {};
+  export let darkScreen = false;
+  export let params: Bindable;
+  export let midiMapping: MidiMapping;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   export let handleMousemove = (event: MouseEvent) => {};
 
+  const handleMidiMessage: MidiHandler = (key, velocity) => {
+    let init = false;
+    if (init) {
+      midiMapping[key]?.(key, velocity);
+    }
+    init = true;
+  };
+
+  let bgColorClass = '';
+  let screenBgColorClass = 'text-black';
+
   onMount(async () => {
-    darkScreen.subscribe((value) => {
-      bgColorClass = value ? 'bg-neutral-900' : '';
-      screenBgColorClass = value ? 'bg-black text-white' : 'text-black';
-    });
+    if (darkScreen) {
+      bgColorClass = 'bg-neutral-900';
+      screenBgColorClass = 'bg-black text-white';
+    }
 
     midiReady.subscribe((isReady) => {
       if (isReady) {
-        midiControls.subscribe(({ key, velocity }) => midiFunc(key, velocity));
+        midiControls.subscribe(({ key, velocity }) => handleMidiMessage(key, velocity));
       }
     });
   });
 </script>
 
-<Pane bind:object />
+<Pane bind:params />
 
 <div class={`h-full grid place-items-center -z-10 ${bgColorClass}`}>
   <div role="figure" on:mousemove={handleMousemove} class={`shadow-xl ${screenBgColorClass}`}>

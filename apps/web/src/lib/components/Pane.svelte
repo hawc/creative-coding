@@ -6,7 +6,7 @@
 
   import { BASE_PARAMS, debug } from '$lib/store';
 
-  export let object: Bindable;
+  export let params: Bindable;
 
   let expandedGlobal = true;
   let expanded = true;
@@ -18,13 +18,13 @@
     <AutoObject bind:object={$BASE_PARAMS} />
   </Folder>
   <Folder bind:expanded title="Renderer">
-    {#each Object.keys(object) as key}
-      {#if object[key].type}
-        {#if object[key].type === 'slider'}
-          <Slider label={key} bind:value={object[key].value} {...object[key].options} />
+    {#each Object.keys(params) as key}
+      {#if params[key].type}
+        {#if params[key].type === 'slider'}
+          <Slider label={key} bind:value={params[key].value} {...params[key].options} />
         {/if}
       {:else}
-        <AutoValue label={key} bind:value={object[key].value} />
+        <AutoValue label={key} bind:value={params[key].value} />
       {/if}
     {/each}
   </Folder>

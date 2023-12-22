@@ -7,11 +7,10 @@
 
   import { canvasDimensions } from '$lib/client/canvasUtils';
   import { sine } from '$lib/client/mathUtils';
-  import type { MidiHandler } from '$lib/client/webMidiUtils';
+  import type { MidiMapping } from '$lib/client/webMidiUtils';
   import Renderer from '$lib/components/Renderer.svelte';
-  import { darkScreen, fullScreen, messages } from '$lib/store';
+  import { fullScreen, messages } from '$lib/store';
 
-  darkScreen.set(true);
   const { diameter, sineFrequency, color, r } = $PARAMS;
 
   let getSine = sine(0, 1);
@@ -61,26 +60,14 @@
     });
   };
 
-  const midiFunc: MidiHandler = (key, velocity) => {
-    let init = false;
-    if (init) {
-      switch (key) {
-        case 0:
-          diameter.value = velocity;
-          break;
-        case 1:
-          // todo: use same scaling logic as TweakPane
-          sineFrequency.value = velocity;
-          break;
-        default:
-      }
-    }
-    init = true;
+  const midiMapping: MidiMapping = {
+    0: (key, velocity) => (diameter.value = velocity),
+    1: (key, velocity) => (sineFrequency.value = velocity)
   };
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<Renderer bind:object={$PARAMS} {handleMousemove} {midiFunc}>
+<Renderer bind:params={$PARAMS} {handleMousemove} {midiMapping}>
   <P5 {sketch} />
 </Renderer>

@@ -4,15 +4,15 @@
   import { establishWebSocket, webSocketEstablished } from '$lib/client/webSocketUtils';
   import { debug, messages } from '$lib/store';
 
-  const logger = (string: string) => {
-    messages.set([...$messages, string]);
-  };
-
   let allowLogging = false;
 
   debug.subscribe((isDebugEnabled) => {
     allowLogging = isDebugEnabled;
   });
+
+  const logger = (string: string) => {
+    messages.set([...$messages, string]);
+  };
 
   onMount(async () => {
     establishWebSocket(logger);
