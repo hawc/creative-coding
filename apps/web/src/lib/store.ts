@@ -4,7 +4,7 @@ export const midiControls = writable({ key: 0, velocity: 1 });
 
 export const BASE_PARAMS = writable({
   debug: false,
-  fullScreen: false,
+  fullScreen: true,
 })
 
 export const debug = derived(BASE_PARAMS, (base) => base.debug);

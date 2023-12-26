@@ -25,6 +25,11 @@
         <Link to="/genuary-24" hide>Genuary '24</Link>
       </div>
     {/if}
+    {#if routeId.includes('demos/')}
+      <div>
+        <Link to="/demos" hide>Demos</Link>
+      </div>
+    {/if}
   </Header>
   <main
     class={`${textColorClass} grow relative`}

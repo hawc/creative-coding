@@ -10,6 +10,11 @@
   import { fullScreen, screenDimensions } from '$lib/store';
 
   let dimensions = canvasDimensions;
+  let renderKey = '';
+
+  PARAMS.subscribe(() => {
+    renderKey = Math.random().toString();
+  });
 
   const midiMapping: MidiMapping = {
     0: (key, velocity) => ($PARAMS.diameter.value = velocity),
@@ -29,6 +34,8 @@
       height: $fullScreen ? $screenDimensions[1] : dimensions[1]
     }}
   >
-    <Scene params={$PARAMS} />
+    {#key renderKey}
+      <Scene params={$PARAMS} />
+    {/key}
   </Canvas>
 </Renderer>

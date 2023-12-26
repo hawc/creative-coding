@@ -15,7 +15,7 @@
 
   const { scene } = useThrelte();
 
-  const stacks = getRandomInt(10, 20);
+  const stacks = params.count.value;
 
   const getPositions = (stacks: number): { x: number; y: number; z: number }[] => {
     const array = [];
@@ -23,7 +23,7 @@
       array.push({
         x: getRandomInt(-10, 10),
         y: getRandomInt(-10, 10),
-        z: getRandomInt(5, 30)
+        z: getRandomInt(params.minHeight.value, params.maxHeight.value)
       });
     }
     return array;
@@ -34,7 +34,7 @@
   let handle: number;
 
   const tick = () => {
-    posY = Math.sin(Date.now() / 12000);
+    posY = Math.sin(Date.now() / 20000);
     handle = window.requestAnimationFrame(tick);
   };
 
@@ -51,12 +51,12 @@
   scene.add(targetObject);
 </script>
 
-<T.PerspectiveCamera makeDefault position={[15, 10, 25]} fov={15}>
+<T.PerspectiveCamera makeDefault position={[15, 3, 25]} fov={15}>
   <OrbitControls enableZoom={$debug} enablePan={$debug} enableDamping target={[0, 2.5, 0]} />
 </T.PerspectiveCamera>
 <SoftShadows />
 
-<T.AmbientLight color={'#ffffff'} intensity={0.05} />
+<T.AmbientLight color={params.color.value} intensity={0.2} />
 <T.DirectionalLight
   let:ref
   position={[8, 8, 0]}
@@ -85,19 +85,21 @@
       position.z={position.x * 0.25}
       position.x={position.y * 0.25}
     >
-      <T.BoxGeometry args={[0.95, position.z * 0.18, 0.95]} />
+      <T.BoxGeometry args={[0.95, position.z * 0.2, 0.95]} />
       <T.MeshStandardMaterial color={'#000000'} roughness={0.2} side={DoubleSide} />
     </T.Mesh>
+
     <T.Group
-      position.y={position.z * 0.18 + 0.2}
+      position.y={position.z * 0.18 + 0.21}
       position.z={position.x * 0.25}
       position.x={position.y * 0.25}
       rotation.y={degToRad(getRandomInt(0, 3) * 90)}
     >
       <T.Mesh castShadow receiveShadow>
-        <T.BoxGeometry args={[1, 0.4, 1]} />
+        <T.BoxGeometry args={[1, 0.39, 1]} />
         <T.MeshStandardMaterial color={'#ffffff'} roughness={0.2} side={DoubleSide} />
       </T.Mesh>
+
       <Text
         text={'Mundsburg'}
         scale={0.8}
