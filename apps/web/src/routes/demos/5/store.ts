@@ -1,10 +1,11 @@
-import { writable } from 'svelte/store';
+import { sha256 } from 'crypto-hash';
+import { derived, writable } from 'svelte/store';
 
 import type { Config } from '$lib/client/canvasUtils';
 
 export const base: Config = {
-  color: {
-    value: '#000000'
+  lightColor: {
+    value: '#ffffff'
   },
   minHeight: {
     type: 'slider',
@@ -37,3 +38,4 @@ export const base: Config = {
 
 export const controls = writable({ key: 0, velocity: 1 });
 export const PARAMS = writable(base);
+export const rerenderHash = derived(PARAMS, async params => (await sha256(`${params.minHeight.value}${params.maxHeight.value}${params.count.value}`)).toString())

@@ -8,11 +8,11 @@ export const canvasDimensions: [number, number] = [400, 400];
 
 type TPType = BindingParams | ColorInputParams | NumberInputParams;
 
-type ValueType = {
+type ValueType<T extends TPType> = {
   type?: 'slider' | 'color';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any,
-  options?: TPType;
+  options?: T;
 }
 
-export type Config = { [key: string]: ValueType };
+export type Config = { [key: string]: ValueType<TPType> };

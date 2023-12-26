@@ -2,15 +2,13 @@
   import { T, useThrelte } from '@threlte/core';
   import { OrbitControls, SoftShadows, Portal, Text } from '@threlte/extras';
   import { onDestroy } from 'svelte';
-  import { DoubleSide, Object3D } from 'three';
-  import type { DirectionalLightHelper } from 'three';
+  import { DoubleSide } from 'three';
   import { degToRad } from 'three/src/math/MathUtils';
 
   import type { Config } from '$lib/client/canvasUtils';
   import { getRandomInt } from '$lib/client/mathUtils';
   import { debug } from '$lib/store';
 
-  // eslint-disable-next-line svelte/valid-compile
   export let params: Config;
 
   const { scene } = useThrelte();
@@ -31,24 +29,18 @@
   const positions = getPositions(stacks);
 
   let posY = 0;
-  let handle: number;
+  let handleTick: number;
 
   const tick = () => {
     posY = Math.sin(Date.now() / 20000);
-    handle = window.requestAnimationFrame(tick);
+    handleTick = window.requestAnimationFrame(tick);
   };
 
   tick();
 
   onDestroy(() => {
-    if (handle) cancelAnimationFrame(handle);
+    if (handleTick) cancelAnimationFrame(handleTick);
   });
-
-  let helperA: DirectionalLightHelper;
-
-  const targetObject = new Object3D();
-  targetObject.position.set(0, 100, 0);
-  scene.add(targetObject);
 </script>
 
 <T.PerspectiveCamera makeDefault position={[15, 3, 25]} fov={15}>
@@ -56,7 +48,7 @@
 </T.PerspectiveCamera>
 <SoftShadows />
 
-<T.AmbientLight color={params.color.value} intensity={0.2} />
+<T.AmbientLight color={params.lightColor.value} intensity={0.2} />
 <T.DirectionalLight
   let:ref
   position={[8, 8, 0]}
@@ -71,7 +63,7 @@
 >
   <Portal object={scene}>
     {#if $debug}
-      <T.DirectionalLightHelper args={[ref]} bind:ref={helperA} />
+      <T.DirectionalLightHelper args={[ref]} />
     {/if}
   </Portal>
 </T.DirectionalLight>
@@ -86,13 +78,13 @@
       position.x={position.y * 0.25}
     >
       <T.BoxGeometry args={[0.95, position.z * 0.175, 0.95]} />
-      <T.MeshStandardMaterial color={'#000000'} roughness={0.2} side={DoubleSide} />
+      <T.MeshStandardMaterial color={'#333333'} roughness={0.2} side={DoubleSide} />
     </T.Mesh>
 
     <T.Group
+      position.x={position.y * 0.25}
       position.y={position.z * 0.175 + 0.1875}
       position.z={position.x * 0.25}
-      position.x={position.y * 0.25}
       rotation.y={degToRad(getRandomInt(0, 3) * 90)}
     >
       <T.Mesh castShadow receiveShadow>
@@ -101,11 +93,12 @@
       </T.Mesh>
 
       <Text
+        castShadow
+        receiveShadow
         text={'Mundsburg'}
         scale={0.8}
         position={[0.02, -0.07, 0.501]}
         color={'#000000'}
-        font={'Helvetica'}
         outlineWidth={0.005}
       />
     </T.Group>
@@ -124,7 +117,7 @@
   {/each}
   <T.Mesh castShadow receiveShadow position.y={-0.5}>
     <T.BoxGeometry args={[6, 1, 6]} />
-    <T.MeshStandardMaterial color={'#222222'} roughness={0.2} side={DoubleSide} />
+    <T.MeshStandardMaterial color={'#333333'} roughness={0.2} side={DoubleSide} />
   </T.Mesh>
 </T.Group>
 

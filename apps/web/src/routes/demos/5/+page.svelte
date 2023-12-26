@@ -2,7 +2,7 @@
   import { Canvas } from '@threlte/core';
 
   import Scene from './scene.svelte';
-  import { PARAMS } from './store';
+  import { PARAMS, rerenderHash } from './store';
 
   import { canvasDimensions } from '$lib/client/canvasUtils';
   import type { MidiMapping } from '$lib/client/webMidiUtils';
@@ -12,8 +12,8 @@
   let dimensions = canvasDimensions;
   let renderKey = '';
 
-  PARAMS.subscribe(() => {
-    renderKey = Math.random().toString();
+  rerenderHash.subscribe(async (param) => {
+    renderKey = await param;
   });
 
   const midiMapping: MidiMapping = {
