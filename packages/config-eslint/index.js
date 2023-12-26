@@ -44,7 +44,15 @@ module.exports = {
         'newlines-between': 'always'
       }
     ],
-    'import/no-unresolved': 'off'
+    'import/no-unresolved': 'off',
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ]
   },
   settings: {
     'import/resolver': {

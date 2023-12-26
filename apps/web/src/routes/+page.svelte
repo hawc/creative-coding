@@ -7,6 +7,9 @@
   <h2>Coding Challenges</h2>
   <ul>
     <li>
+      <Link to="/demos">Demos</Link>
+    </li>
+    <li>
       <Link to="/genuary-24">Genuary '24</Link>
     </li>
   </ul>
