@@ -81,22 +81,22 @@
     <T.Mesh
       castShadow
       receiveShadow
-      position.y={position.z * 0.09}
+      position.y={(position.z * 0.175) / 2 + 0.0125}
       position.z={position.x * 0.25}
       position.x={position.y * 0.25}
     >
-      <T.BoxGeometry args={[0.95, position.z * 0.2, 0.95]} />
+      <T.BoxGeometry args={[0.95, position.z * 0.175, 0.95]} />
       <T.MeshStandardMaterial color={'#000000'} roughness={0.2} side={DoubleSide} />
     </T.Mesh>
 
     <T.Group
-      position.y={position.z * 0.18 + 0.21}
+      position.y={position.z * 0.175 + 0.1875}
       position.z={position.x * 0.25}
       position.x={position.y * 0.25}
       rotation.y={degToRad(getRandomInt(0, 3) * 90)}
     >
       <T.Mesh castShadow receiveShadow>
-        <T.BoxGeometry args={[1, 0.39, 1]} />
+        <T.BoxGeometry args={[1, 0.375, 1]} />
         <T.MeshStandardMaterial color={'#ffffff'} roughness={0.2} side={DoubleSide} />
       </T.Mesh>
 
@@ -113,11 +113,11 @@
       <T.Mesh
         castShadow
         receiveShadow
-        position.y={index * 0.18 + 0.03}
+        position.y={index * 0.175 + 0.0125}
         position.z={position.x * 0.25}
         position.x={position.y * 0.25}
       >
-        <T.BoxGeometry args={[1, 0.03, 1]} />
+        <T.BoxGeometry args={[1, 0.025, 1]} />
         <T.MeshStandardMaterial color={'#ffffff'} roughness={0.2} side={DoubleSide} />
       </T.Mesh>
     {/each}
