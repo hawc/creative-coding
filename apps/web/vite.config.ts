@@ -1,10 +1,14 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { defineConfig } from 'vitest/config';
 
 import { createWSSGlobalInstance, onHttpServerUpgrade } from './src/lib/server/webSocketUtils';
 
 export default defineConfig({
   plugins: [
+    nodePolyfills({
+      protocolImports: true,
+    }),
     sveltekit(),
     {
       name: 'integratedWebsocketServer',
@@ -31,5 +35,5 @@ export default defineConfig({
   },
   ssr: {
     noExternal: ['three']
-  }
+  },
 });

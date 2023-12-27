@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Link } from '@partnerds-de/ui';
+  // import { Link } from '@partnerds-de/ui';
 </script>
 
 <main class="p-2 pt-3">

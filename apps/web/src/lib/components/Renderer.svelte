@@ -33,7 +33,7 @@
   });
 </script>
 
-<Pane bind:params />
+<Pane bind:params fixed />
 
 <div class={`h-full grid place-items-center -z-10 ${bgColorClass}`}>
   <div role="figure" on:mousemove={handleMousemove} class={`shadow-xl ${screenBgColorClass}`}>

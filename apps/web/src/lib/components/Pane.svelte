@@ -7,13 +7,14 @@
   import { BASE_PARAMS, debug } from '$lib/store';
 
   export let params: Bindable;
+  export let fixed = false;
 
   let expandedGlobal = true;
   let expanded = true;
   let expandedDebug = true;
 </script>
 
-<Pane position="fixed" y={50} title="">
+<Pane position={fixed ? 'fixed' : 'inline'} y={50} title="">
   <Folder bind:expanded={expandedGlobal} title="Global">
     <AutoObject bind:object={$BASE_PARAMS} />
   </Folder>
