@@ -1,0 +1,1 @@
+import{d as a,w as s}from"./index.k8f3s86m.js";const r=s({key:0,velocity:1}),n=s({debug:!1,fullScreen:!0}),t=a(n,e=>e.debug),c=a(n,e=>e.fullScreen),d=s(!1),l=s("0"),i=s([]),f=s([0,0]);export{n as B,i as a,d as b,t as d,c as f,r as m,l as r,f as s};

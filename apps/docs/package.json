@@ -15,11 +15,12 @@
     "test:unit": "vitest"
   },
   "dependencies": {
-    "@partnerds-de/ui": "*"
+    "@partnerds-de/ui": "*",
+    "@sveltejs/adapter-vercel": "^4.0.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.35.1",
     "@partnerds-de/eslint-config": "*",
+    "@playwright/test": "^1.35.1",
     "@sveltejs/adapter-auto": "^2.1.0",
     "@sveltejs/kit": "^2.0.6",
     "@typescript-eslint/eslint-plugin": "^6.12.0",

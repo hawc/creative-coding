@@ -1,0 +1,1 @@
+function a(t,r){let n=0,o=0;return e=>(o=t/2+r*Math.sin(n/e),n=n+1,o)}function u(t){return Math.floor(t*100)/100}function l(t,r){return t=Math.ceil(t),r=Math.floor(r),Math.floor(Math.random()*(r-t+1))+t}export{l as g,u as r,a as s};
