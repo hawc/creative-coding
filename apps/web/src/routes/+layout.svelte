@@ -4,7 +4,6 @@
 
   import { page } from '$app/stores';
   import MidiReceiver from '$lib/components/MidiReceiver.svelte';
-  import WebSocketReceiver from '$lib/components/WebSocketReceiver.svelte';
   import { rerender, screenDimensions } from '$lib/store';
 
   let routeId = '';
@@ -37,11 +36,9 @@
     bind:clientHeight={$screenDimensions[1]}
   >
     <MidiReceiver>
-      <WebSocketReceiver>
-        {#key rerenderKey}
-          <slot />
-        {/key}
-      </WebSocketReceiver>
+      {#key rerenderKey}
+        <slot />
+      {/key}
     </MidiReceiver>
   </main>
   <Footer />

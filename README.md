@@ -20,7 +20,7 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `web`: a [svelte-kit](https://kit.svelte.dev/) app, using websockets to control rendered p5 output (wip)
+- `web`: a [svelte-kit](https://kit.svelte.dev/) app, using peer-to-peer connections (via WebRTC) to render p5.js and Three.js scenes
 - `docs`: a [svelte-kit](https://kit.svelte.dev/) demo app
 - `ui`: a stub Svelte component library shared by both `web` and `docs` applications
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-plugin-svelte` and `eslint-config-prettier`)

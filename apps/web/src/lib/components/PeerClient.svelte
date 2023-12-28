@@ -10,7 +10,7 @@
   export let handleChange: (data: unknown) => void;
 
   onMount(async () => {
-    initPeerClient(window.location.origin, handleChange, (linka) => (link = linka));
+    initPeerClient(window.location.origin, handleChange, (connectUrl) => (link = connectUrl));
   });
 </script>
 

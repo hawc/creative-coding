@@ -1,7 +1,5 @@
 import type { DataConnection, Peer } from 'peerjs';
 
-export const webSocketEstablished = false;
-
 let peer: Peer;
 let connection: DataConnection | undefined;
 
