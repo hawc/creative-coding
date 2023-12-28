@@ -1,7 +1,7 @@
 <script lang="ts">
   import type p5 from 'p5';
   import type { Sketch } from 'p5-svelte';
-  import P5 from 'p5-svelte/P5.svelte';
+  import { default as P5 } from 'p5-svelte';
 
   import { PARAMS } from './params';
 
