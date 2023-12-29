@@ -52,7 +52,8 @@ module.exports = {
         "varsIgnorePattern": "^_",
         "caughtErrorsIgnorePattern": "^_"
       }
-    ]
+    ],
+    "max-len": ["error", { "code": 140 }]
   },
   settings: {
     'import/resolver': {

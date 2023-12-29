@@ -3,10 +3,10 @@
   import { OrbitControls, SoftShadows, Portal, Text } from '@threlte/extras';
   import { onDestroy } from 'svelte';
   import { DoubleSide } from 'three';
-  import { degToRad } from 'three/src/math/MathUtils';
+  import { degToRad } from 'three/src/math/MathUtils.js';
 
   import type { Config } from '$lib/client/canvasUtils';
-  import { getRandomInt } from '$lib/client/mathUtils';
+  import { CIRCLE_DEGREES, getRandomInt } from '$lib/client/mathUtils';
   import { debug } from '$lib/store';
 
   export let params: Config;
@@ -68,7 +68,7 @@
   </Portal>
 </T.DirectionalLight>
 
-<T.Group rotation.y={degToRad(posY * 360)}>
+<T.Group rotation.y={degToRad(posY * CIRCLE_DEGREES)}>
   {#each positions as position}
     <T.Mesh
       castShadow

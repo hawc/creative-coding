@@ -12,7 +12,7 @@ export const base: Config = {
     value: 5,
     options: {
       min: 0,
-      max: 25,
+      max: 20,
       step: 1
     }
   },
@@ -20,7 +20,7 @@ export const base: Config = {
     type: 'slider',
     value: 25,
     options: {
-      min: 25,
+      min: 20,
       max: 50,
       step: 1
     }
@@ -37,5 +37,9 @@ export const base: Config = {
 }
 
 export const midiControls = writable({ key: 0, velocity: 1 });
+
 export const controls = writable(base);
-export const rerenderHash = derived(controls, async params => (await sha256(`${params.minHeight.value}${params.maxHeight.value}${params.count.value}`)).toString())
+
+export const rerenderHash = derived(controls, async params => {
+  return (await sha256(`${params.minHeight.value}${params.maxHeight.value}${params.count.value}`)).toString();
+})
