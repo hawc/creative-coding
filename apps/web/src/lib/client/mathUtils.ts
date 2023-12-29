@@ -1,3 +1,6 @@
+
+export const CIRCLE_DEGREES = 360;
+
 export function sine(height: number, amplitude: number) {
   let x = 0;
   let y = 0;

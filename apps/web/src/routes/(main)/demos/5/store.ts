@@ -36,6 +36,6 @@ export const base: Config = {
   }
 }
 
-export const controls = writable({ key: 0, velocity: 1 });
-export const PARAMS = writable(base);
-export const rerenderHash = derived(PARAMS, async params => (await sha256(`${params.minHeight.value}${params.maxHeight.value}${params.count.value}`)).toString())
+export const midiControls = writable({ key: 0, velocity: 1 });
+export const controls = writable(base);
+export const rerenderHash = derived(controls, async params => (await sha256(`${params.minHeight.value}${params.maxHeight.value}${params.count.value}`)).toString())

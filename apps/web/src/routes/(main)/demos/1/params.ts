@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 
-export const controls = writable({ key: 0, velocity: 1 });
+export const midiControls = writable({ key: 0, velocity: 1 });
 
 const base = {
   color: { value: '#ff0055' },
@@ -9,4 +9,4 @@ const base = {
   sineFrequency: { value: 10 }
 };
 
-export const PARAMS = writable(base);
+export const controls = writable(base);

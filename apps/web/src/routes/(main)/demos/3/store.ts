@@ -24,5 +24,5 @@ export const base: Config = {
   }
 }
 
-export const controls = writable({ key: 0, velocity: 1 });
-export const PARAMS = writable(base);
+export const midiControls = writable({ key: 0, velocity: 1 });
+export const controls = writable(base);

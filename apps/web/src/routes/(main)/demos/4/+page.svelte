@@ -3,7 +3,7 @@
   import type { Sketch } from 'p5-svelte';
   import { default as P5 } from 'p5-svelte';
 
-  import { PARAMS } from './params';
+  import { controls } from './params';
 
   import { canvasDimensions } from '$lib/client/canvasUtils';
   import { sine } from '$lib/client/mathUtils';
@@ -11,7 +11,7 @@
   import Renderer from '$lib/components/Renderer.svelte';
   import { fullScreen, messages } from '$lib/store';
 
-  const { diameter, sineFrequency, color, r } = $PARAMS;
+  const { diameter, sineFrequency, color, r } = $controls;
 
   let getSine = sine(0, 1);
 
@@ -68,6 +68,6 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<Renderer bind:params={$PARAMS} {handleMousemove} {midiMapping}>
+<Renderer bind:params={$controls} {handleMousemove} {midiMapping}>
   <P5 {sketch} />
 </Renderer>

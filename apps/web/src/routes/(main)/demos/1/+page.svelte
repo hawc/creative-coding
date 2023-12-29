@@ -3,15 +3,15 @@
   import type { Sketch } from 'p5-svelte';
   import { default as P5 } from 'p5-svelte';
 
-  import { PARAMS } from './params';
+  import { controls } from './params';
 
   import { canvasDimensions } from '$lib/client/canvasUtils';
-  import { sine } from '$lib/client/mathUtils';
+  import { CIRCLE_DEGREES, sine } from '$lib/client/mathUtils';
   import type { MidiMapping } from '$lib/client/webMidiUtils';
   import Renderer from '$lib/components/Renderer.svelte';
   import { fullScreen } from '$lib/store';
 
-  const { diameter, sineFrequency, color } = $PARAMS;
+  const { diameter, sineFrequency, color } = $controls;
 
   let getSine = sine(0, 1);
 
@@ -46,8 +46,8 @@
           arcy,
           300 - index * 32,
           300 - index * 32,
-          p5.radians(Math.random() * 360),
-          p5.radians(Math.random() * 360)
+          p5.radians(Math.random() * CIRCLE_DEGREES),
+          p5.radians(Math.random() * CIRCLE_DEGREES)
         );
       }
     };
@@ -76,6 +76,6 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<Renderer bind:params={$PARAMS} {midiMapping}>
+<Renderer bind:params={$controls} {midiMapping}>
   <P5 {sketch} />
 </Renderer>

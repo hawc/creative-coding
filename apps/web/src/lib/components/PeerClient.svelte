@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Bindable } from '@tweakpane/core';
   import { onMount } from 'svelte';
   import { renderSVG } from 'uqr';
 
@@ -7,10 +8,14 @@
   let peerID: string;
   let link: string;
 
-  export let handleChange: (data: unknown) => void;
+  export let params: Bindable;
 
   onMount(async () => {
-    initPeerClient(window.location.origin, handleChange, (connectUrl) => (link = connectUrl));
+    initPeerClient(
+      window.location.origin,
+      (data) => params.set(data),
+      (connectUrl) => (link = connectUrl)
+    );
   });
 </script>
 

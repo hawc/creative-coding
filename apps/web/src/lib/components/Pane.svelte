@@ -4,7 +4,7 @@
 
   import Log from './Log.svelte';
 
-  import { BASE_PARAMS, debug } from '$lib/store';
+  import { base, debug } from '$lib/store';
 
   export let params: Bindable;
   export let fixed = false;
@@ -16,7 +16,7 @@
 
 <Pane position={fixed ? 'fixed' : 'inline'} y={50} title="">
   <Folder bind:expanded={expandedGlobal} title="Global">
-    <AutoObject bind:object={$BASE_PARAMS} />
+    <AutoObject bind:object={$base} />
   </Folder>
   <Folder bind:expanded title="Renderer">
     {#each Object.keys(params) as key}

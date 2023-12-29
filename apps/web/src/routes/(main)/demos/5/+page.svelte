@@ -2,9 +2,8 @@
   import { Canvas } from '@threlte/core';
 
   import Scene from './scene.svelte';
-  import { PARAMS, rerenderHash } from './store';
+  import { controls, rerenderHash } from './store';
 
-  import type { Config } from '$lib/client/canvasUtils';
   import { canvasDimensions } from '$lib/client/canvasUtils';
   import type { MidiMapping } from '$lib/client/webMidiUtils';
   import PeerClient from '$lib/components/PeerClient.svelte';
@@ -19,21 +18,17 @@
   });
 
   const midiMapping: MidiMapping = {
-    0: (key, velocity) => ($PARAMS.diameter.value = velocity),
+    0: (key, velocity) => ($controls.diameter.value = velocity),
     1: (key, velocity) =>
-      ($PARAMS.sineFrequency.value = Math.max(
-        ($PARAMS.sineFrequency.options?.max as number | undefined) ?? 10,
+      ($controls.sineFrequency.value = Math.max(
+        ($controls.sineFrequency.options?.max as number | undefined) ?? 10,
         Math.floor(velocity * 100)
       ))
   };
-
-  const updateStore = (data: unknown) => {
-    PARAMS.set(data as Config);
-  };
 </script>
 
-<PeerClient handleChange={(data) => updateStore(data)}>
-  <Renderer bind:params={$PARAMS} {midiMapping}>
+<PeerClient params={controls}>
+  <Renderer bind:params={$controls} {midiMapping}>
     <Canvas
       renderMode="always"
       size={{
@@ -42,7 +37,7 @@
       }}
     >
       {#key renderKey}
-        <Scene params={$PARAMS} />
+        <Scene params={$controls} />
       {/key}
     </Canvas>
   </Renderer>
