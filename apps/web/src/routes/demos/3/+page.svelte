@@ -8,6 +8,7 @@
   import { canvasDimensions } from '$lib/client/canvasUtils';
   import Pane from '$lib/components/Pane.svelte';
   import PeerClient from '$lib/components/PeerClient.svelte';
+  import Renderer from '$lib/components/Renderer.svelte';
   import { fullScreen, screenDimensions } from '$lib/store';
 
   setContext('controls', controls);
@@ -16,15 +17,17 @@
   let dimensions = canvasDimensions;
 </script>
 
-<Canvas
-  renderMode="always"
-  size={{
-    width: $fullScreen ? $screenDimensions[0] : dimensions[0],
-    height: $fullScreen ? $screenDimensions[1] : dimensions[1]
-  }}
->
-  <Scene params={$controls} />
-</Canvas>
+<Renderer>
+  <Canvas
+    renderMode="always"
+    size={{
+      width: $fullScreen ? $screenDimensions[0] : dimensions[0],
+      height: $fullScreen ? $screenDimensions[1] : dimensions[1]
+    }}
+  >
+    <Scene params={$controls} />
+  </Canvas>
+</Renderer>
 
 <Pane fixed />
 <PeerClient />

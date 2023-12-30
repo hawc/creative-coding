@@ -8,7 +8,7 @@
   <div>
     <ul>
       <li>
-        <Link to="/demos/1">Generative 2D with p5.JS</Link>
+        <Link to="/demos/1">Generative 2D with p5.js</Link>
       </li>
       <li>
         <Link to="/demos/2">Simple Three.js scene without controls</Link>

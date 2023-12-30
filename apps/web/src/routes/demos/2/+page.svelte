@@ -1,10 +1,12 @@
 <script lang="ts">
   import { Canvas, T } from '@threlte/core';
   import { OrbitControls } from '@threlte/extras';
+
+  import Renderer from '$lib/components/Renderer.svelte';
 </script>
 
-<main>
-  <div class="sphere-canvas">
+<Renderer>
+  <div class="absolute w-full h-full top-0 left-0">
     <Canvas>
       <T.PerspectiveCamera makeDefault position={[-10, 20, 10]} fov={15}>
         <OrbitControls
@@ -25,18 +27,4 @@
       </T.Mesh>
     </Canvas>
   </div>
-</main>
-
-<style>
-  main {
-    font-family: sans-serif;
-  }
-  .sphere-canvas {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-  }
-</style>
+</Renderer>
