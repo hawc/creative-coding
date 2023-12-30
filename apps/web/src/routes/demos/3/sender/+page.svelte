@@ -10,5 +10,5 @@
   setContext('midiMapping', midiMapping);
 </script>
 
-<Pane />
+<Pane sender />
 <PeerController />

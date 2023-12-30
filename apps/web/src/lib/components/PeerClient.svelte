@@ -1,13 +1,10 @@
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import { renderSVG } from 'uqr';
 
   import type { Config } from '$lib/client/canvasUtils';
   import { initPeerClient } from '$lib/client/peerUtils';
-
-  let peerID: string;
-  let link: string;
+  import { senderLink } from '$lib/store';
 
   const controls: Writable<Config> = getContext('controls');
 
@@ -17,16 +14,9 @@
       (data) => {
         controls.set(data as Config);
       },
-      (connectUrl) => (link = connectUrl)
+      (connectUrl) => {
+        senderLink.set(connectUrl);
+      }
     );
   });
 </script>
-
-{#if link}
-  <a title={peerID} class="absolute top-0 left-0" href={link} target="_new">
-    <div class="w-32 h-32">
-      <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-      {@html renderSVG(link)}
-    </div>
-  </a>
-{/if}
