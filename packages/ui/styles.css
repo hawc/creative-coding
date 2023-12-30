@@ -33,6 +33,11 @@
   src: url("@partnerds-de/ui/static/fonts/PT_Mono/PTMono-Regular.ttf");
 }
 
+@font-face {font-family: "PT Mono";
+    src: url("@partnerds-de/ui/static/fonts/PT_Mono/PTMono-Bold.ttf");
+    font-weight: bold;
+}
+
 h1,
 h2,
 h3,

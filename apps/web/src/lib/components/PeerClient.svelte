@@ -1,19 +1,22 @@
 <script lang="ts">
-  import type { Bindable } from '@tweakpane/core';
-  import { onMount } from 'svelte';
+  import { getContext, onMount } from 'svelte';
+  import type { Writable } from 'svelte/store';
   import { renderSVG } from 'uqr';
 
+  import type { Config } from '$lib/client/canvasUtils';
   import { initPeerClient } from '$lib/client/peerUtils';
 
   let peerID: string;
   let link: string;
 
-  export let params: Bindable;
+  const controls: Writable<Config> = getContext('controls');
 
   onMount(async () => {
     initPeerClient(
-      window.location.origin,
-      (data) => params.set(data),
+      `${window.location.origin}/sender${window.location.pathname}`,
+      (data) => {
+        controls.set(data as Config);
+      },
       (connectUrl) => (link = connectUrl)
     );
   });
@@ -27,5 +30,3 @@
     </div>
   </a>
 {/if}
-
-<slot />

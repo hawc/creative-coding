@@ -3,15 +3,12 @@
   import type { Sketch } from 'p5-svelte';
   import { default as P5 } from 'p5-svelte';
 
-  import { controls } from './params';
+  import { controls } from './store';
 
   import { canvasDimensions } from '$lib/client/canvasUtils';
   import { CIRCLE_DEGREES, sine } from '$lib/client/mathUtils';
-  import type { MidiMapping } from '$lib/client/webMidiUtils';
   import Renderer from '$lib/components/Renderer.svelte';
   import { fullScreen } from '$lib/store';
-
-  const { diameter, sineFrequency, color } = $controls;
 
   let getSine = sine(0, 1);
 
@@ -54,11 +51,11 @@
 
     p5.draw = () => {
       p5.strokeWeight(2);
-      p5.fill(color.value);
+      p5.fill($controls.color.value);
       let x = centerX + radius * p5.cos(angle);
       let y = centerY + radius * p5.sin(angle);
-      const ellipseSize = 100 * diameter.value * getSine(sineFrequency.value);
-      p5.ellipse(x, y, ellipseSize, ellipseSize).fill(color.value);
+      const ellipseSize = 100 * $controls.diameter.value * getSine($controls.sineFrequency.value);
+      p5.ellipse(x, y, ellipseSize, ellipseSize).fill($controls.color.value);
 
       angle = angle + speed;
     };
@@ -67,15 +64,10 @@
       p5.setup();
     });
   };
-
-  const midiMapping: MidiMapping = {
-    0: (key, velocity) => (diameter.value = velocity),
-    1: (key, velocity) => (sineFrequency.value = Math.max(10, Math.floor(velocity * 100)))
-  };
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<Renderer bind:params={$controls} {midiMapping}>
+<Renderer>
   <P5 {sketch} />
 </Renderer>

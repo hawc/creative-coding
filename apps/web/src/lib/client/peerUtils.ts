@@ -15,7 +15,7 @@ export async function initPeerClient(baseUrl: string, onData: (data: unknown) =>
   await loadPeer();
 
   peer.on('open', () => {
-    connectionCallback(`${baseUrl}/sender?k=${peer.id}`);
+    connectionCallback(`${baseUrl}?k=${peer.id}`);
 
     peer.on('connection', (conn) => {
       connection = conn;
@@ -78,7 +78,7 @@ export function onConnection(
     if (onData) {
       onData(data);
     }
-    console.log('data reveiced: ', data);
+    console.log('data received: ', data);
   });
 
   connection.on('error', (error) => {

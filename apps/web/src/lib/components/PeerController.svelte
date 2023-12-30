@@ -1,24 +1,16 @@
 <script lang="ts">
-  import type { Bindable } from '@tweakpane/core';
-  import { onMount } from 'svelte';
+  import { getContext, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
 
-  import Pane from './Pane.svelte';
-
+  import type { Config } from '$lib/client/canvasUtils';
   import { initPeer, sendMessage } from '$lib/client/peerUtils';
 
-  export let params: Writable<Bindable>;
+  const controls: Writable<Config> = getContext('controls');
 
-  params.subscribe((p) => sendMessage(p));
+  controls.subscribe((data) => sendMessage(data));
 
   onMount(async () => {
     const code = new URL(window.location.href).searchParams.get('k') ?? '';
     initPeer(code);
   });
 </script>
-
-<div class="m-2 max-w-sm rounded overflow-hidden">
-  <Pane bind:params={$params} />
-</div>
-
-<slot />

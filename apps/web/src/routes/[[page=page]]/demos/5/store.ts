@@ -1,7 +1,9 @@
+/* eslint-disable indent */
 import { sha256 } from 'crypto-hash';
 import { derived, writable } from 'svelte/store';
 
 import type { Config } from '$lib/client/canvasUtils';
+import type { MidiMapping } from '$lib/client/webMidiUtils';
 
 export const base: Config = {
   lightColor: {
@@ -43,3 +45,12 @@ export const controls = writable(base);
 export const rerenderHash = derived(controls, async params => {
   return (await sha256(`${params.minHeight.value}${params.maxHeight.value}${params.count.value}`)).toString();
 })
+
+export const midiMapping: MidiMapping = {
+  0: (key, velocity) => (base.diameter.value = velocity),
+  1: (key, velocity) =>
+  (base.sineFrequency.value = Math.max(
+    (base.sineFrequency.options?.max as number | undefined) ?? 10,
+    Math.floor(velocity * 100)
+  ))
+};

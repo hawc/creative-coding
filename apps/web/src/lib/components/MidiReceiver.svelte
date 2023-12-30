@@ -3,8 +3,7 @@
 
   import { roundDecimals } from '$lib/client/mathUtils';
   import { initMIDIAccess, type MidiHandler } from '$lib/client/webMidiUtils';
-  import { debug, messages, midiReady } from '$lib/store';
-  import { midiControls } from '$lib/store.js';
+  import { debug, messages, midiControls, midiReady } from '$lib/store';
 
   let allowLogging = false;
 

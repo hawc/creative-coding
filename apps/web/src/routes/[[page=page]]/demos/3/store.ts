@@ -1,6 +1,8 @@
+/* eslint-disable indent */
 import { writable } from 'svelte/store';
 
 import type { Config } from '$lib/client/canvasUtils';
+import type { MidiMapping } from '$lib/client/webMidiUtils';
 
 export const base: Config = {
   color: {
@@ -26,3 +28,12 @@ export const base: Config = {
 
 export const midiControls = writable({ key: 0, velocity: 1 });
 export const controls = writable(base);
+
+export const midiMapping: MidiMapping = {
+  0: (key, velocity) => (base.diameter.value = velocity),
+  1: (key, velocity) =>
+  (base.sineFrequency.value = Math.max(
+    (base.sineFrequency.options?.max as number | undefined) ?? 10,
+    Math.floor(velocity * 100)
+  ))
+};

@@ -1,5 +1,7 @@
 import { writable } from 'svelte/store';
 
+import type { MidiMapping } from '$lib/client/webMidiUtils';
+
 
 export const midiControls = writable({ key: 0, velocity: 1 });
 
@@ -35,3 +37,8 @@ const base = {
 };
 
 export const controls = writable(base);
+
+export const midiMapping: MidiMapping = {
+  0: (key, velocity) => (base.diameter.value = velocity),
+  1: (key, velocity) => (base.sineFrequency.value = velocity)
+};
