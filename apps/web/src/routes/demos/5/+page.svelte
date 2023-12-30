@@ -1,11 +1,17 @@
 <script lang="ts">
   import { Canvas } from '@threlte/core';
+  import { setContext } from 'svelte';
 
   import Scene from './scene.svelte';
-  import { rerenderHash, controls } from './store';
+  import { rerenderHash, controls, midiMapping } from './store';
 
   import { canvasDimensions } from '$lib/client/canvasUtils';
+  import Pane from '$lib/components/Pane.svelte';
+  import PeerClient from '$lib/components/PeerClient.svelte';
   import { fullScreen, screenDimensions } from '$lib/store';
+
+  setContext('controls', controls);
+  setContext('midiMapping', midiMapping);
 
   let dimensions = canvasDimensions;
   let renderKey = '';
@@ -26,3 +32,6 @@
     <Scene params={$controls} />
   {/key}
 </Canvas>
+
+<Pane fixed />
+<PeerClient />

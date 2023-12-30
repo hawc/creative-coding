@@ -2,12 +2,18 @@
   import type p5 from 'p5';
   import type { Sketch } from 'p5-svelte';
   import { default as P5 } from 'p5-svelte';
+  import { setContext } from 'svelte';
 
-  import { controls } from './store';
+  import { controls, midiMapping } from './store';
 
   import { canvasDimensions } from '$lib/client/canvasUtils';
   import { sine } from '$lib/client/mathUtils';
+  import Pane from '$lib/components/Pane.svelte';
+  import PeerClient from '$lib/components/PeerClient.svelte';
   import { fullScreen, mousePosition, screenDimensions } from '$lib/store';
+
+  setContext('controls', controls);
+  setContext('midiMapping', midiMapping);
 
   let getSine = sine(0, 1);
 
@@ -20,6 +26,7 @@
     };
 
     p5.draw = () => {
+      p5.background('#ffffff');
       const cellSize = $controls.r.value;
       const radius =
         cellSize * $controls.diameter.value * (($mousePosition.x + $mousePosition.y) / 1000);
@@ -47,3 +54,6 @@
 </script>
 
 <P5 {sketch} />
+
+<Pane fixed />
+<PeerClient />

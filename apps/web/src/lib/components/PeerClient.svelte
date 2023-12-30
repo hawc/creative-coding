@@ -13,7 +13,7 @@
 
   onMount(async () => {
     initPeerClient(
-      `${window.location.origin}/sender${window.location.pathname}`,
+      `${window.location.href}/sender`,
       (data) => {
         controls.set(data as Config);
       },

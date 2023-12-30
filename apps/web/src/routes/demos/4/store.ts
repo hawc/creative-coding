@@ -2,7 +2,6 @@ import { writable } from 'svelte/store';
 
 import type { MidiMapping } from '$lib/client/webMidiUtils';
 
-
 export const midiControls = writable({ key: 0, velocity: 1 });
 
 const base = {
