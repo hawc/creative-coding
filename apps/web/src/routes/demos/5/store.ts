@@ -2,8 +2,8 @@
 import { sha256 } from 'crypto-hash';
 import { derived, writable } from 'svelte/store';
 
-import type { MidiMapping } from '$lib/client/webMidiUtils';
 import type { Config } from '$lib/store';
+import type { MidiMapping } from '$lib/utils/webMidiUtils';
 
 export const base: Config = {
   lightColor: {

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { rand } from '$lib/utils/mathUtils';
+
   const characters = [
     '👋',
     '🤚',
@@ -17,7 +19,6 @@
     '🫶',
     '🙌',
     '👐',
-    '🙏',
     '✍️',
     '💅',
     '💪',
@@ -37,19 +38,15 @@
   ];
   const char = characters[Math.floor(Math.random() * characters.length)];
 
-  function rand(min: number, max: number) {
-    return parseInt((Math.random() * (max - min + 1)).toString(), 10) + min;
-  }
-
-  function get_random_color() {
+  function getRandomColor() {
     var h = rand(200, 360);
     var s = rand(54, 75);
     var l = rand(45, 55);
     return 'hsl(' + h + ',' + s + '%,' + l + '%)';
   }
 
-  const randomColor = get_random_color();
-  const randomRotation = (Math.random() - 0.5) * 90; // rotate between -45 to 45 degrees
+  const randomColor = getRandomColor();
+  const randomRotation = rand(-45, 45);
 </script>
 
 <div

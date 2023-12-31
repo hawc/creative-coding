@@ -2,8 +2,8 @@
   import { getContext, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
 
-  import { initPeer, sendMessage } from '$lib/client/peerUtils';
   import { base, type Config } from '$lib/store';
+  import { initPeer, sendMessage } from '$lib/utils/peerUtils';
 
   const controls: Writable<Config> = getContext('controls');
 

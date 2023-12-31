@@ -6,12 +6,12 @@
 
   import { controls, midiMapping } from './store';
 
-  import { canvasDimensions } from '$lib/client/canvasUtils';
-  import { CIRCLE_DEGREES, sine } from '$lib/client/mathUtils';
   import Pane from '$lib/components/Pane.svelte';
   import PeerClient from '$lib/components/PeerClient.svelte';
   import Renderer from '$lib/components/Renderer.svelte';
   import { fullScreen } from '$lib/store';
+  import { canvasDimensions } from '$lib/utils/canvasUtils';
+  import { CIRCLE_DEGREES, sine } from '$lib/utils/mathUtils';
 
   setContext('controls', controls);
   setContext('midiMapping', midiMapping);

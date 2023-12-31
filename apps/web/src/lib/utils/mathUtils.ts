@@ -1,5 +1,8 @@
-
 export const CIRCLE_DEGREES = 360;
+
+export function rand(min: number, max: number) {
+  return parseInt((Math.random() * (max - min + 1)).toString(), 10) + min;
+}
 
 export function sine(height: number, amplitude: number) {
   let x = 0;

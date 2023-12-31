@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { log } from '$lib/client/logUtils';
-  import { roundDecimals } from '$lib/client/mathUtils';
-  import { initMIDIAccess, type MidiHandler } from '$lib/client/webMidiUtils';
   import { midiControls, midiReady } from '$lib/store';
+  import { log } from '$lib/utils/logUtils';
+  import { roundDecimals } from '$lib/utils/mathUtils';
+  import { initMIDIAccess, type MidiHandler } from '$lib/utils/webMidiUtils';
 
   const handler: MidiHandler = (key, velocity) => {
     log(`MIDI: 🔑 ${key} 🎚️ ${velocity} 📈 ${roundDecimals(velocity / 127)}`);

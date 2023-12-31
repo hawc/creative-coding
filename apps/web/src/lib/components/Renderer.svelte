@@ -1,8 +1,8 @@
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
 
-  import type { MidiHandler, MidiMapping } from '$lib/client/webMidiUtils';
   import { midiControls, midiReady, mousePosition } from '$lib/store';
+  import type { MidiHandler, MidiMapping } from '$lib/utils/webMidiUtils';
 
   export let darkScreen = false;
 

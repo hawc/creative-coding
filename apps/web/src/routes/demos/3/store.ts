@@ -1,8 +1,8 @@
 /* eslint-disable indent */
 import { writable } from 'svelte/store';
 
-import type { MidiMapping } from '$lib/client/webMidiUtils';
 import type { Config } from '$lib/store';
+import type { MidiMapping } from '$lib/utils/webMidiUtils';
 
 export const base: Config = {
   color: {

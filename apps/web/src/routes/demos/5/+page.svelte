@@ -5,16 +5,16 @@
   import Scene from './scene.svelte';
   import { rerenderHash, controls, midiMapping } from './store';
 
-  import { canvasDimensions } from '$lib/client/canvasUtils';
   import Pane from '$lib/components/Pane.svelte';
   import PeerClient from '$lib/components/PeerClient.svelte';
   import Renderer from '$lib/components/Renderer.svelte';
   import { fullScreen, screenDimensions } from '$lib/store';
+  import { canvasDimensions } from '$lib/utils/canvasUtils';
 
   setContext('controls', controls);
   setContext('midiMapping', midiMapping);
 
-  let dimensions = canvasDimensions;
+  const dimensions = $fullScreen ? $screenDimensions : canvasDimensions;
   let renderKey = '';
 
   rerenderHash.subscribe(async (param) => {
@@ -26,8 +26,8 @@
   <Canvas
     renderMode="always"
     size={{
-      width: $fullScreen ? $screenDimensions[0] : dimensions[0],
-      height: $fullScreen ? $screenDimensions[1] : dimensions[1]
+      width: dimensions[0],
+      height: dimensions[1]
     }}
   >
     {#key renderKey}
