@@ -8,9 +8,6 @@ export const GET: RequestHandler = (async ({ url }: { url: URL }) => {
     const options: RenderOptions = {
       width: 128,
       height: 128,
-      props: {
-        text: url.searchParams.get('text') ?? 'text not found'
-      },
       fonts: [
         {
           name: 'Typewriter',
