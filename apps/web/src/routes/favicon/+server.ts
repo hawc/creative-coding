@@ -23,7 +23,7 @@ export const GET: RequestHandler = (async ({ url }: { url: URL }) => {
     const image = await image_from_component(Favicon, options);
     const response = new Response(image);
     response.headers.append('Content-Type', 'image/png');
-    response.headers.append('Cache-Control', 's-maxage=120, stale-while-revalidate=120');
+    response.headers.append('Cache-Control', 's-maxage=1, stale-while-revalidate=1');
     return response;
   } catch (e) {
     console.error(e);
