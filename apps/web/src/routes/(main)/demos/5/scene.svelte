@@ -1,6 +1,6 @@
 <script lang="ts">
   import { T, useThrelte } from '@threlte/core';
-  import { OrbitControls, SoftShadows, Portal, Text, Environment } from '@threlte/extras';
+  import { OrbitControls, SoftShadows, Portal, Text } from '@threlte/extras';
   import { onDestroy } from 'svelte';
   import { DoubleSide } from 'three';
   import { degToRad } from 'three/src/math/MathUtils.js';
