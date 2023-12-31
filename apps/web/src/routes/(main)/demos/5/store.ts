@@ -42,8 +42,8 @@ export const midiControls = writable({ key: 0, velocity: 1 });
 
 export const controls = writable(base);
 
-export const rerenderHash = derived(controls, async params => {
-  return (await sha256(`${params.minHeight.value}${params.maxHeight.value}${params.count.value}`)).toString();
+export const rerenderKey = derived(controls, params => {
+  return `${params.minHeight.value}${params.maxHeight.value}${params.count.value}`;
 })
 
 export const midiMapping: MidiMapping = {

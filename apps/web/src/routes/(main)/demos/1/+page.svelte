@@ -9,7 +9,7 @@
   import Pane from '$lib/components/Pane.svelte';
   import PeerClient from '$lib/components/PeerClient.svelte';
   import Renderer from '$lib/components/Renderer.svelte';
-  import { fullScreen } from '$lib/store';
+  import { fullScreen, screenDimensions } from '$lib/store';
   import { canvasDimensions } from '$lib/utils/canvasUtils';
   import { CIRCLE_DEGREES, sine } from '$lib/utils/mathUtils';
 
@@ -17,9 +17,6 @@
   setContext('midiMapping', midiMapping);
 
   let getSine = sine(0, 1);
-
-  let innerWidth = canvasDimensions[0];
-  let innerHeight = canvasDimensions[1];
 
   const sketch: Sketch = (p5: p5) => {
     let radius = 150;
@@ -29,7 +26,7 @@
     let centerY = window.innerHeight / 2;
 
     p5.setup = () => {
-      const dimensions = $fullScreen ? [innerWidth, innerHeight] : canvasDimensions;
+      const dimensions = $fullScreen ? $screenDimensions : canvasDimensions;
       p5.createCanvas(dimensions[0], dimensions[1]);
       p5.background('#000000');
 
@@ -71,8 +68,6 @@
     });
   };
 </script>
-
-<svelte:window bind:innerWidth bind:innerHeight />
 
 <Renderer>
   <P5 {sketch} />

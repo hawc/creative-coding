@@ -3,7 +3,7 @@
   import { setContext } from 'svelte';
 
   import Scene from './scene.svelte';
-  import { rerenderHash, controls, midiMapping } from './store';
+  import { rerenderKey, controls, midiMapping } from './store';
 
   import Pane from '$lib/components/Pane.svelte';
   import PeerClient from '$lib/components/PeerClient.svelte';
@@ -14,11 +14,10 @@
   setContext('controls', controls);
   setContext('midiMapping', midiMapping);
 
-  const dimensions = $fullScreen ? $screenDimensions : canvasDimensions;
-  let renderKey = '';
+  let renderKey = $rerenderKey;
 
-  rerenderHash.subscribe(async (param) => {
-    renderKey = await param;
+  rerenderKey.subscribe((key) => {
+    renderKey = key;
   });
 </script>
 
@@ -26,8 +25,8 @@
   <Canvas
     renderMode="always"
     size={{
-      width: dimensions[0],
-      height: dimensions[1]
+      width: $fullScreen ? $screenDimensions[0] : canvasDimensions[0],
+      height: $fullScreen ? $screenDimensions[1] : canvasDimensions[1]
     }}
   >
     {#key renderKey}

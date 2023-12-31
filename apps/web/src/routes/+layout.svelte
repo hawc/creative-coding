@@ -6,8 +6,7 @@
   import MidiReceiver from '$lib/components/MidiReceiver.svelte';
   import { rerender, screenDimensions } from '$lib/store';
 
-  let routeId = '';
-  page.subscribe((p) => (routeId = p.route.id ?? ''));
+  let routeId = $page.route.id ?? '';
 
   let textColorClass = 'text-red';
   let rerenderKey = '';

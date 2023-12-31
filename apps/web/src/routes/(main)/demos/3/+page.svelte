@@ -13,16 +13,14 @@
 
   setContext('controls', controls);
   setContext('midiMapping', midiMapping);
-
-  const dimensions = $fullScreen ? $screenDimensions : canvasDimensions;
 </script>
 
 <Renderer>
   <Canvas
     renderMode="always"
     size={{
-      width: dimensions[0],
-      height: dimensions[1]
+      width: $fullScreen ? $screenDimensions[0] : canvasDimensions[0],
+      height: $fullScreen ? $screenDimensions[1] : canvasDimensions[1]
     }}
   >
     <Scene params={$controls} />

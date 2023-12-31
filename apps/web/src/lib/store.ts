@@ -27,7 +27,7 @@ export const debug = derived(base, (base) => base.debug);
 export const fullScreen = derived(base, (base) => base.fullScreen);
 
 export const midiReady = writable(false);
-export const rerender = writable('0');
+export const rerender = writable('');
 export const senderLink = writable('');
 export const messages = writable([] as string[]);
 export const screenDimensions = writable([0, 0]);
