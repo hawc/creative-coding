@@ -1,7 +1,6 @@
 import { derived, writable, type Writable } from 'svelte/store';
 import type { BindingParams, ColorInputParams, NumberInputParams } from 'tweakpane';
 
-
 type TPType = BindingParams | ColorInputParams | NumberInputParams;
 
 type ValueType<T extends TPType> = {
