@@ -1,7 +1,6 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
 import { image_from_component, type RenderOptions } from 'svelte-component-to-image';
 
-
 import Favicon from './Favicon.svelte';
 
 export const GET: RequestHandler = (async ({ url }: { url: URL }) => {
@@ -18,16 +17,16 @@ export const GET: RequestHandler = (async ({ url }: { url: URL }) => {
           url: `${url.origin}/fonts/Noto_Emoji/static/NotoEmoji-Bold.ttf`,
         }
       ]
-    }
+    };
 
     // pass the component and options to the package
-    const image = await image_from_component(Favicon, options)
-    const response = new Response(image)
-    response.headers.append('Content-Type', 'image/png')
-    response.headers.append('Cache-Control', 's-maxage=1000, stale-while-revalidate=1000')
-    return response
+    const image = await image_from_component(Favicon, options);
+    const response = new Response(image);
+    response.headers.append('Content-Type', 'image/png');
+    response.headers.append('Cache-Control', 's-maxage=120, stale-while-revalidate=120');
+    return response;
   } catch (e) {
-    console.error(e)
-    throw error(500, 'Error trying to generate image from component.')
+    console.error(e);
+    throw error(500, 'Error trying to generate image from component.');
   }
-}) satisfies RequestHandler
+}) satisfies RequestHandler;
