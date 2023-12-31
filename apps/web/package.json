@@ -30,6 +30,7 @@
     "p5-svelte": "^3.1.2",
     "peer": "^1.0.2",
     "peerjs": "^1.5.2",
+    "svelte-component-to-image": "^0.1.0",
     "svelte-tweakpane-ui": "^1.0.1",
     "three": "^0.160.0",
     "tweakpane": "^4.0.1",
