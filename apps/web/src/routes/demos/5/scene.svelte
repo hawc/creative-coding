@@ -5,9 +5,8 @@
   import { DoubleSide } from 'three';
   import { degToRad } from 'three/src/math/MathUtils.js';
 
-  import type { Config } from '$lib/client/canvasUtils';
   import { CIRCLE_DEGREES, getRandomInt } from '$lib/client/mathUtils';
-  import { debug } from '$lib/store';
+  import { debug, type Config } from '$lib/store';
 
   export let params: Config;
 

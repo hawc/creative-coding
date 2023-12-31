@@ -6,8 +6,7 @@
 
   import Log from './Log.svelte';
 
-  import type { Config } from '$lib/client/canvasUtils';
-  import { base, debug, senderLink } from '$lib/store';
+  import { base, debug, senderLink, type Config } from '$lib/store';
 
   export let fixed = false;
   export let sender = false;
@@ -37,15 +36,15 @@
       {/each}
     </Folder>
   {/if}
-  {#if $debug}
-    <Folder bind:expanded={expandedDebug} title="Debug">
-      <Element>
-        <Log />
-        {$senderLink}
-      </Element>
-    </Folder>
-  {/if}
   {#if !sender && $senderLink}
+    {#if $debug}
+      <Folder bind:expanded={expandedDebug} title="Debug">
+        <Element>
+          <Log />
+          {$senderLink}
+        </Element>
+      </Folder>
+    {/if}
     <Folder bind:expanded={expandedSenderLink} title="External Controller">
       <Element>
         <a href={$senderLink} target="_new">

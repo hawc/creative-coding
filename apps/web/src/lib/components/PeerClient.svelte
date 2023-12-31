@@ -2,20 +2,25 @@
   import { getContext, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
 
-  import type { Config } from '$lib/client/canvasUtils';
-  import { initPeerClient } from '$lib/client/peerUtils';
-  import { senderLink } from '$lib/store';
+  import { initPeer, sendMessage } from '$lib/client/peerUtils';
+  import { base, senderLink, type Config } from '$lib/store';
 
   const controls: Writable<Config> = getContext('controls');
 
   onMount(async () => {
-    initPeerClient(
-      `${window.location.href}/sender`,
+    initPeer(
+      undefined,
       (data) => {
-        controls.set(data as Config);
+        if (data.controls) {
+          controls.set(data.controls);
+        }
+        if (data.global) {
+          base.set(data.global);
+        }
       },
-      (connectUrl) => {
-        senderLink.set(connectUrl);
+      () => sendMessage({ global: $base, controls: $controls }),
+      (peerID) => {
+        senderLink.set(`${window.location.href}/sender?k=${peerID}`);
       }
     );
   });

@@ -1,23 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  import { log } from '$lib/client/logUtils';
   import { roundDecimals } from '$lib/client/mathUtils';
   import { initMIDIAccess, type MidiHandler } from '$lib/client/webMidiUtils';
-  import { debug, messages, midiControls, midiReady } from '$lib/store';
-
-  let allowLogging = false;
-
-  debug.subscribe((isDebugEnabled) => (allowLogging = isDebugEnabled));
+  import { midiControls, midiReady } from '$lib/store';
 
   const handler: MidiHandler = (key, velocity) => {
-    if (allowLogging) {
-      messages.set([
-        ...$messages,
-        `MIDI: 🔑 ${key} 🎚️ ${velocity} 📈 ${roundDecimals(velocity / 127)}`
-      ]);
-    }
-
-    $midiControls = { key, velocity: roundDecimals(velocity / 127) };
+    log(`MIDI: 🔑 ${key} 🎚️ ${velocity} 📈 ${roundDecimals(velocity / 127)}`);
+    midiControls.set({ key, velocity: roundDecimals(velocity / 127) });
   };
 
   onMount(async () => {

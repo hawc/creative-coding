@@ -1,3 +1,5 @@
+import { log } from './logUtils';
+
 type DeviceOffsetConfig = { [key: string]: number };
 
 export type MidiHandler = (key: number, velocity: number) => void;
@@ -31,8 +33,8 @@ export async function initMIDIAccess(
       };
     });
     return true;
-  } catch (err) {
-    console.log('Failed to get MIDI access - ' + err);
+  } catch (error) {
+    log(`Failed to get MIDI access: ${JSON.stringify(error)}`);
     return false;
   }
 }

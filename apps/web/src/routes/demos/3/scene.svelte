@@ -2,8 +2,7 @@
   import { T } from '@threlte/core';
   import { OrbitControls, Text } from '@threlte/extras';
 
-  import type { Config } from '$lib/client/canvasUtils';
-  import { debug } from '$lib/store';
+  import { debug, type Config } from '$lib/store';
 
   export let params: Config;
 </script>
