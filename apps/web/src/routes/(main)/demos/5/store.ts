@@ -1,5 +1,4 @@
 /* eslint-disable indent */
-import { sha256 } from 'crypto-hash';
 import { derived, writable } from 'svelte/store';
 
 import type { Config } from '$lib/store';
@@ -14,7 +13,7 @@ export const base: Config = {
     value: 5,
     options: {
       min: 0,
-      max: 20,
+      max: 15,
       step: 1
     }
   },
@@ -22,8 +21,8 @@ export const base: Config = {
     type: 'slider',
     value: 25,
     options: {
-      min: 20,
-      max: 50,
+      min: 15,
+      max: 35,
       step: 1
     }
   },

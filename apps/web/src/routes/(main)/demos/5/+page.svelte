@@ -22,18 +22,25 @@
 </script>
 
 <Renderer>
-  <Canvas
-    renderMode="always"
-    size={{
-      width: $fullScreen ? $screenDimensions[0] : canvasDimensions[0],
-      height: $fullScreen ? $screenDimensions[1] : canvasDimensions[1]
-    }}
-  >
-    {#key renderKey}
-      <Scene params={$controls} />
-    {/key}
-  </Canvas>
+  <div class="bg-ddd">
+    <Canvas
+      renderMode="always"
+      size={{
+        width: $fullScreen ? $screenDimensions[0] : canvasDimensions[0],
+        height: $fullScreen ? $screenDimensions[1] : canvasDimensions[1]
+      }}
+    >
+      {#key renderKey}
+        <Scene params={$controls} />
+      {/key}
+    </Canvas>
+  </div>
 </Renderer>
-
 <Pane fixed />
 <PeerClient />
+
+<style>
+  .bg-ddd {
+    background-color: #dddddd;
+  }
+</style>

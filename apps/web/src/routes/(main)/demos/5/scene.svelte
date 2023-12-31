@@ -1,6 +1,6 @@
 <script lang="ts">
   import { T, useThrelte } from '@threlte/core';
-  import { OrbitControls, SoftShadows, Portal, Text } from '@threlte/extras';
+  import { OrbitControls, SoftShadows, Portal, Text, Environment } from '@threlte/extras';
   import { onDestroy } from 'svelte';
   import { DoubleSide } from 'three';
   import { degToRad } from 'three/src/math/MathUtils.js';
@@ -42,15 +42,24 @@
   });
 </script>
 
-<T.PerspectiveCamera makeDefault position={[15, 3, 25]} fov={15}>
+<T.PerspectiveCamera makeDefault position={[0, 2, 28]} fov={15}>
   <OrbitControls enableZoom={$debug} enablePan={$debug} enableDamping target={[0, 2.5, 0]} />
 </T.PerspectiveCamera>
+
 <SoftShadows />
+
+<T.FogExp2
+  color={'#dddddd'}
+  density={0.015}
+  on:create={({ ref }) => {
+    scene.fog = ref;
+  }}
+/>
 
 <T.AmbientLight color={params.lightColor.value} intensity={0.2} />
 <T.DirectionalLight
   let:ref
-  position={[8, 8, 0]}
+  position={[-20, 6, 35]}
   castShadow
   shadow.mapSize.width={1024}
   shadow.mapSize.height={1024}
@@ -58,7 +67,7 @@
   shadow.camera.right={10}
   shadow.camera.top={-10}
   shadow.camera.bottom={10}
-  intensity={8}
+  intensity={4}
 >
   <Portal object={scene}>
     {#if $debug}
@@ -77,7 +86,7 @@
       position.x={position.y * 0.25}
     >
       <T.BoxGeometry args={[0.95, position.z * 0.175, 0.95]} />
-      <T.MeshStandardMaterial color={'#333333'} roughness={0.2} side={DoubleSide} />
+      <T.MeshStandardMaterial color={'#222222'} roughness={0.2} side={DoubleSide} />
     </T.Mesh>
 
     <T.Group
@@ -116,7 +125,15 @@
   {/each}
   <T.Mesh castShadow receiveShadow position.y={-0.5}>
     <T.BoxGeometry args={[6, 1, 6]} />
-    <T.MeshStandardMaterial color={'#333333'} roughness={0.2} side={DoubleSide} />
+    <T.MeshStandardMaterial color={'#222222'} roughness={0.2} side={DoubleSide} />
+  </T.Mesh>
+  <T.Mesh castShadow receiveShadow position.y={-0.055}>
+    <T.BoxGeometry args={[6.1, 0.1, 6.1]} />
+    <T.MeshStandardMaterial color={'#ffffff'} roughness={0.2} side={DoubleSide} />
+  </T.Mesh>
+  <T.Mesh castShadow receiveShadow position.y={-0.525}>
+    <T.BoxGeometry args={[6.1, 0.1, 6.1]} />
+    <T.MeshStandardMaterial color={'#ffffff'} roughness={0.2} side={DoubleSide} />
   </T.Mesh>
 </T.Group>
 
